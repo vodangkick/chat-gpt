@@ -13,10 +13,12 @@ type Props = {
 }
 
 function Chat({chatId, user} : Props) {
+    localStorage.setItem("myCat", "user3");
+    const userName : any = localStorage.getItem('myCat');
     const {data: session} = useSession();
     ///console.log(user, chatId,'ssss');
     const [messages, loading] = useCollection(query(
-        collection(db, 'users', 'user3', 'chats', chatId, 'messages'),
+        collection(db, 'users', userName, 'chats', chatId, 'messages'),
         orderBy("createAt", 'asc')
     ))
 
