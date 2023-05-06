@@ -18,7 +18,7 @@ export default function ChatInput({chatId} : Props) {
         fallbackData: 'text-davinci-003'
     });
 
-    const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
+    const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if(!prompt) return;
 

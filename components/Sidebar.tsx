@@ -19,7 +19,7 @@ function Sidebar() {
         <div className="p-2 flex flex-col h-screen">
             <div className="flex-1">
                 {/* { new chat } */}
-                <NewChat/>
+                <NewChat id="" />
                 <div className="hidden sm:inline">
                     <ModelSelection />
                 </div>
