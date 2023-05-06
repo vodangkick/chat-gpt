@@ -7,3 +7,15 @@ interface Message {
         avata: string;
     }
 }
+
+interface dataRegister {
+    username : String,
+    password : String,
+    email: String
+}
+
+interface dataLogin {
+    username : String,
+    password : String,
+
+}

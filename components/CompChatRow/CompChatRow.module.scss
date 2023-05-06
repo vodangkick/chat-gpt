@@ -1,0 +1,12 @@
+.chatRow {
+    p {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 200px;
+
+        &:first-letter {
+            text-transform: capitalize;
+        }
+    }
+}

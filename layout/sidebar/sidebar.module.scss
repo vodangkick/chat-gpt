@@ -1,0 +1,53 @@
+@import '../../styles/mixin-color.scss';
+
+.sidebar {
+    background-color: #202123;
+    position: relative;
+    width: 400px;
+    padding: 0 10px;
+
+    .closeToggle {
+        position: absolute;
+        right: -31px;
+        top: 0;
+        color: $color-white;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        border: 1px solid $color-gray-2;
+        background: $color-black;
+        display: none;
+        cursor: pointer;
+    }
+
+
+    @include mq(lg, max) {
+        position: fixed;
+        left: 0;
+        top: 0;
+        transition: all 0.3s ease-out;
+        transform: translate(-125%);
+        width: 260px;
+
+        &.openMenu {
+            transform: translate(0);
+        }
+
+        .closeToggle {
+            display: block;
+        }
+    }
+
+    .logOut {
+        cursor: pointer;
+        padding: 5px 5px 5px 20px;
+        color: rgb(209 213 219);
+
+        svg {
+            margin-right: 10px;
+        }
+    }
+    
+}

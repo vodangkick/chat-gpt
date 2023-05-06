@@ -1,0 +1,17 @@
+@import '../../styles/mixin-color.scss';
+
+
+.header {
+    justify-content : space-between;
+    background: $color-gray-1;
+    color: $color-white;
+    border-bottom: 1px solid $color-gray-2;
+    display: flex;
+    align-items: center;
+    display: none;
+
+    @include mq(lg, max) {
+        display: flex;
+    }
+    
+}

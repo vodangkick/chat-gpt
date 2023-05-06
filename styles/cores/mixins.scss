@@ -1,0 +1,44 @@
+$grid-breakpoints: (
+  xx: 0,
+  xs: 376px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+  xxxl: 1600px
+);
+//_____________________________________________________
+//                                          MEDIA QUERY
+@mixin mq($width, $type: max) {
+  @if map_has_key($grid-breakpoints, $width) {
+    $width: screen($width);
+  }
+  @if $type==max {
+    $width: $width - 1px;
+  }
+  @media only screen and (#{$type}-width: $width) {
+    @content;
+  }
+}
+
+@mixin mm($minwidth, $maxwidth) {
+  @if map_has_key($grid-breakpoints, $minwidth) {
+    $minwidth: screen($minwidth);
+  }
+  @if map_has_key($grid-breakpoints, $maxwidth) {
+    $maxwidth: screen($maxwidth) - 1px;
+  }
+  @media only screen and (min-width: $minwidth) and (max-width: $maxwidth) {
+    @content;
+  }
+}
+
+//_____________________________________________________
+//                                           GET SCREEN
+@function screen($name) {
+  @return map-get($grid-breakpoints, $name);
+}
+
+//_____________________________________________________
+//                                           FONT SIZE
