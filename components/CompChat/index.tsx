@@ -15,7 +15,7 @@ import { TypeAnimation } from 'react-type-animation';
 
 
 
-const API_KEY = "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";
+const API_KEY = "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";
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
@@ -25,25 +25,24 @@ type Props = {
     user: string
 }
 
-function CompChat({chatId,user} : Props) {
-    // let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
-    // if(isLogged) {
-    //   isLogged = JSON.parse(isLogged);
-    // }
-    let userName : any = typeof window !== 'undefined' ? localStorage.getItem('username') : null
+function CompChat({chatId, user} : Props) {
+    let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
+    isLogged = JSON.parse(isLogged);
+    //let userName : any = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
 
-    //const userName = isLogged?.username!;
-    //const userName = user;
+    //const userName = isLogged?.username;
+    const userName = user;
+    //console.log(user,'username2')
     
     const [prompt, setPrompt] = useState("");
     const messageListRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLInputElement>(null)
     const [loadingText, setTextLoading] = useState(false);
-    let userName2 = useSelector((state: RootState) => state.auth);
+    //let userName2 = useSelector((state: RootState) => state.auth);
    
     const [messages,loading,error] = useCollection(query(
-        collection(db, 'users', userName, 'chats', chatId, 'messages'),
+      collection(db, 'users', userName, 'chats', chatId, 'messages'),
         orderBy("createAt", 'asc'),
     ))
 
@@ -179,7 +178,7 @@ function CompChat({chatId,user} : Props) {
                             <ArrowDownCircleIcon className="h-10 w-10 mx-auto mt-5 text-white animate-bounce"/>
                         </>
                     )}
-                    {messages?.docs.map((message) =>(
+                    {messages && messages?.docs.map((message) =>(
                         <Message key={message.id} message={message.data()} />
                     ) )}
                     { loading && (

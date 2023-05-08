@@ -5,7 +5,7 @@ type Props = {
 }
 
 function Message({message}: Props) {
-    const isChatGPT = message.user.name === "chatGPT"
+    const isChatGPT = message?.user?.name! === "chatGPT"
     
     return (
         <div className={`py-5 text-white ${isChatGPT && "bg-[#434654]"}`}>

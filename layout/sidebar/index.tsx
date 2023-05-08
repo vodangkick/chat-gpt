@@ -24,14 +24,14 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
       isLogged = JSON.parse(isLogged);
     }
 
-    //const userName = isLogged?.username;
+    const userName = isLogged?.username;
     //const userName = user;
     //console.log(userName,'test');
     //const userName = 'user3';
-    const userName = useSelector((state: RootState) => state.auth.username)
+    //const userName = useSelector((state: RootState) => state.auth.username)
     
     const [chats, loading, error] = useCollection(
-        collection(db,'users', userName,"chats")
+        userName && collection(db,'users', userName,"chats")
     );
 
     const router = useRouter();
