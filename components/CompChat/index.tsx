@@ -15,7 +15,7 @@ import { TypeAnimation } from 'react-type-animation';
 
 
 
-const API_KEY = "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";
+const API_KEY = "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";
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
