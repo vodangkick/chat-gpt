@@ -25,8 +25,6 @@ function ChatRow({id} : Props) {
         if(!pathname) return;
         setAvtive(pathname.includes(id));
 
-        console.log(active);
-
     },[pathname])
 
     const removeChat = async () => {

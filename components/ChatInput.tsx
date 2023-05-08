@@ -51,10 +51,12 @@ export default function ChatInput({chatId} : Props) {
                 model,
                 session
             })
-        }).then(() => {
+        }).then((res) => {
             toast.success('chat gpt has responed',{
                 id: notification,
             })
+
+            console.log(res,'ress');
         })
     } 
 
