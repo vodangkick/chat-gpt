@@ -14,7 +14,7 @@ function NewChat({id} : Props) {
     const router = useRouter();
     const {data: session} = useSession();
     const createNewChat = async () => {
-        const  doc = await addDoc(collection(db,"users", 'user3', "chats"),{
+        const  doc = await addDoc(collection(db,"users", session?.user?.email!, "chats"),{
             userId: 'userid',
             createAt: serverTimestamp()
         })

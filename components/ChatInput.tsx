@@ -36,7 +36,7 @@ export default function ChatInput({chatId} : Props) {
         }
 
         await addDoc(
-            collection(db, "users", 'user3', 'chats', chatId, 'messages'),
+            collection(db, "users", session?.user?.email!, 'chats', chatId, 'messages'),
             message
         )
 

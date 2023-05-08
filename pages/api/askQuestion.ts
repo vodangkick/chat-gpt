@@ -44,7 +44,7 @@ export default async function handler(
     }
 
     await adminDb.collection("users")
-    .doc('user3')
+    .doc(session?.user?.email!)
     .collection("chats")
     .doc(chatId)
     .collection("messages")

@@ -1,6 +1,6 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
+import { useSession,signOut } from 'next-auth/react'
 import {useCollection} from 'react-firebase-hooks/firestore';
 import React from 'react'
 import NewChat from './NewChat'
@@ -12,7 +12,7 @@ import ModelSelection from './ModelSelection';
 function Sidebar() {
     const {data : session} = useSession();
     const [chats, loading, error] = useCollection(
-        collection(db,'users',"user3","chats")
+        collection(db,'users',session?.user?.email!,"chats")
     );
 
     return (
@@ -36,12 +36,12 @@ function Sidebar() {
                 
             </div>
 
-            {/* {session && 
-                <img src={session.user?.image!} alt="profile pic"
-                className="h-12 w-12 cursor-pointer mx-auto mb-2 hover:opacity-50" />
-            } */}
-            <img src="https://links.papareact.com/2i6" alt="profile pic"
-            className="h-12 w-12 rounded-full cursor-pointer mx-auto mb-2 hover:opacity-50" />
+            {session && 
+                <img onClick={()=> signOut()} src="https://links.papareact.com/2i6" alt="profile pic"
+                className="h-12 w-15 cursor-pointer mx-auto mb-2 hover:opacity-50" />
+            }
+            {/* <img src="https://links.papareact.com/2i6" alt="profile pic"
+            className="h-12 w-12 rounded-full cursor-pointer mx-auto mb-2 hover:opacity-50" /> */}
         </div>
     )
 }
