@@ -12,7 +12,7 @@ import ModelSelection from './ModelSelection';
 function Sidebar() {
     const {data : session} = useSession();
     const [chats, loading, error] = useCollection(
-        collection(db,'users',session?.user?.email!,"chats")
+        session && collection(db,'users',session?.user?.email!,"chats")
     );
 
     return (
