@@ -15,7 +15,7 @@ import { TypeAnimation } from 'react-type-animation';
 
 
 
-const API_KEY = "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";
+const API_KEY = "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";
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
@@ -26,13 +26,15 @@ type Props = {
 }
 
 function CompChat({chatId,user} : Props) {
-    let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
-    if(isLogged) {
-      isLogged = JSON.parse(isLogged);
-    }
+    // let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
+    // if(isLogged) {
+    //   isLogged = JSON.parse(isLogged);
+    // }
+    let userName : any = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
-    //const userName = isLogged?.username;
-    const userName = user;
+
+    //const userName = isLogged?.username!;
+    //const userName = user;
     
     const [prompt, setPrompt] = useState("");
     const messageListRef = useRef<HTMLInputElement>(null);
@@ -141,6 +143,9 @@ function CompChat({chatId,user} : Props) {
         }).then((data) => {
                return data.json();
         }).then((data) => {
+          console.log(data,'ressss');
+
+
           const messageChatGPT: Message = {
             text: data.choices[0].message.content || "chat gpt was unable to find an answer for that!",
             createAt: serverTimestamp(),
