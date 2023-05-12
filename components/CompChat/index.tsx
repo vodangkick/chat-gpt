@@ -16,7 +16,7 @@ import CompLoading from "../commons/CompLoading";
 
 
 
-const API_KEY = "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";
+const API_KEY = "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";
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }

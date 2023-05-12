@@ -62,7 +62,8 @@
         bottom: 0;
         position: absolute;
         background: $color-black;
-        width: calc(100% - 10px);
+        width: 100%;
+        left: 0;
 
         svg {
             margin-right: 10px;
