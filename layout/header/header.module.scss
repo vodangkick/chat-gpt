@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     display: none;
+    padding: 10px;
 
     @include mq(lg, max) {
         display: flex;

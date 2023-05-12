@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
 module.exports = {
   reactStrictMode: true,
   images: {
@@ -7,7 +8,8 @@ module.exports = {
   experimental: {
     appDir: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
   },
+  
 }

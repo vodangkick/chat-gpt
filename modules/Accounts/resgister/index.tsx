@@ -65,8 +65,10 @@ const RegisterPage = () => {
                 onChange={e => setPassword(e.target.value)}
                 />
             </div>
-            <button onClick={() => handleRegister()}>Continue</button>
-            <Link href="/login">Login</Link>
+            <button onClick={() => handleRegister()}>Submit</button>
+            <div className={`${styles.textBottom} mt-5 items-center`}>
+              Don't have an account? <Link className="text-[#10a37f]" href="/login">Login</Link>
+            </div>
         </div>
     </>
   );

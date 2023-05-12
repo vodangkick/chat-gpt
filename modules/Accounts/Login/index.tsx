@@ -8,6 +8,8 @@ import { RootState, AppDispatch }  from '../../../store/store'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import LoadingFull from '../../../components/commons/CompLoading/LoadingFull';
+import Image from 'next/image';
+import github from '../../../images/github.png';
 
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,7 +52,7 @@ const LoginPage = () => {
       {isLoading && (
         <LoadingFull />
       )}
-      <form className={styles.loginForm} onSubmit={handleLogin}>
+      <form className={`${styles.loginForm}`} onSubmit={handleLogin}>
         <h1>Welcome Chat GPT</h1>
         { error && <p className="mt-2 text-amber-500">Email or passwor is invalid</p>}
         <div>
@@ -67,8 +69,16 @@ const LoginPage = () => {
             onChange={e => setPassword(e.target.value)}
           />
         </div>
-        <button>Continue</button>
-        <Link href="/register">Register</Link>
+        <button>Submit</button>
+        <div className={`${styles.textBottom} mt-5 items-center`}>
+          Don't have an account? <Link className="text-[#10a37f]" href="/register">Sign up</Link>
+        </div>
+        <div className={styles.buttonsConnect}>
+            <span className={styles.buttonIcon}>
+                <Image src={github} alt=""/>
+                <p>Login with Github</p>
+            </span>
+        </div>
       </form>
       
     </>

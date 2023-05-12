@@ -33,7 +33,7 @@ export default function ContentPage({children} : Props) {
 
     return (
         <>
-            <Header funcShowMenu={handleShowMenu}/>
+            <Header funcShowMenu={handleShowMenu} username={userName} />
                     <div className="flex">
                         <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show} user={userName}/>
                         <div className="bg-[#343541] w-full">

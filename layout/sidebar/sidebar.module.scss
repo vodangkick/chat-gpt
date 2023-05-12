@@ -1,10 +1,21 @@
 @import '../../styles/mixin-color.scss';
 
+
 .sidebar {
     background-color: #202123;
     position: relative;
     width: 400px;
     padding: 0 10px;
+
+    .contentRow {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        height: calc(100% - 120px);
+        margin-bottom: 60px;
+        overflow-y: auto;
+        width: 100%;
+    }
 
     .closeToggle {
         position: absolute;
@@ -39,11 +50,19 @@
             display: block;
         }
     }
+    
+    &.openMenu {
+        transform: translate(0);
+    }
 
     .logOut {
         cursor: pointer;
-        padding: 5px 5px 5px 20px;
+        padding: 15px 5px 15px 20px;
         color: rgb(209 213 219);
+        bottom: 0;
+        position: absolute;
+        background: $color-black;
+        width: calc(100% - 10px);
 
         svg {
             margin-right: 10px;

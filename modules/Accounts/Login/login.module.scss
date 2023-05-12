@@ -1,8 +1,12 @@
 @import '../../../styles/mixin-color.scss';
 
 .loginForm {
-    max-width: 450px;
+    max-width: 320px;
     margin: 30px auto 0;
+
+    &.test {
+        color: yellow;
+    }
 
     h1 {
         text-align: center;
@@ -14,9 +18,10 @@
         border: 1px solid $color-green;
         margin-top: 20px;
         width: 100%;
+        border-radius: 3px;
     }
 
-    button, a {
+    button{
         background-color: $color-green;
         border: 1px solid $color-green;
         color: $color-white;
@@ -25,6 +30,8 @@
         margin-top: 30px;
         padding: 10px 0;
         display: block;
+        border-radius: 3px;
+
 
         &:hover {
             opacity: 0.8;
@@ -33,5 +40,40 @@
 
     a {
         margin-top: 20px;
+    }
+
+    .textBottom {
+        text-align: center;
+
+        a {
+            color: $color-green;
+            padding-right:10px ;
+        }
+    }
+
+    .buttonsConnect {
+        margin-top: 30px;
+    }
+
+    .buttonIcon {
+        border: 1px solid $color-green;
+        padding: 8px 10px;
+        text-align: left;
+        display: flex;
+        width: 100%;
+        border-radius: 3px;
+        align-items: center;
+        cursor: pointer;
+        color: $color-black;
+
+        &:hover {
+            background:rgba($color-green, 0.2);
+        }
+
+        img {
+            margin-right: 10px;
+            width: auto;
+            height: 20px;
+        }
     }
 }

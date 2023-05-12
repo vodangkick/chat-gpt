@@ -17,12 +17,11 @@ function NewChat({id, username} : Props) {
             userId: 'userid',
             createAt: serverTimestamp()
         })
-
         router.push(`/chat/${doc.id}`)
 
     }
     return (
-        <div onClick={createNewChat} className="border-gray-700 border chatRow mb-2">
+        <div onClick={createNewChat} className="mt-2 border-gray-700 border chatRow mb-2">
             <PlusIcon className="w-4 h-4" />
             <p>New Chat</p>
         </div>

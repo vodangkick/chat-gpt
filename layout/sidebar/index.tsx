@@ -12,6 +12,7 @@ import { logout } from '../../store/reducers/auth';
 import styles from './sidebar.module.scss';
 import { AiOutlineClose, AiOutlineImport } from "react-icons/ai";
 import { RootState } from '../../store/store';
+import CompLoading from '../../components/commons/CompLoading';
 
 type Props = {
     funcCloseMenu: Function,
@@ -23,6 +24,8 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
     if(isLogged) {
       isLogged = JSON.parse(isLogged);
     }
+
+    console.log(handeShow);
 
     const userName = isLogged?.username;
     //const userName = user;
@@ -43,21 +46,19 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
     
 
     return (
-        <div className={`${styles.sidebar} ${handeShow ? 'openMenu' : ''}  h-screen overflow-y-auto`}>
+        <div className={`${styles.sidebar} ${handeShow && styles.openMenu} h-screen overflow-y-auto`}>
             <div className={`p-2 flex flex-col h-screen`}>
                 <div className="flex-1">
                     <NewChat id='' username={userName} />
-                    <div className={styles.closeToggle} >
+                    <div className={styles.closeToggle} onClick={()=>funcCloseMenu()} >
                         x
                     </div>
-                    <div className="flex flex-col space-y-2 my-2">
+                    <div className={`${styles.contentRow} flex flex-col space-y-2 my-2`}>
                         { loading && (
-                            <div className="animate-pulse text-center text-white">
-                                <p>Loading chats...</p>
-                            </div>
+                            <CompLoading/>
                         )}
                         {chats?.docs.map(chat => (
-                            <ChatRow key={chat.id} id={chat.id} user={userName} />
+                            <ChatRow funcCloseMenu={funcCloseMenu} key={chat.id} id={chat.id} user={userName} />
                         ))}
                     </div>
                 </div>

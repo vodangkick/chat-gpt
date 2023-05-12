@@ -11,6 +11,7 @@ import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import styles from './CompChat.module.scss';
 import { TypeAnimation } from 'react-type-animation';
+import CompLoading from "../commons/CompLoading";
 
 
 
@@ -22,18 +23,17 @@ const systemMessage = {
 
 type Props = {
     chatId : string,
-    user: string
 }
 
-function CompChat({chatId, user} : Props) {
+function CompChat({chatId} : Props) {
     let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
     isLogged = JSON.parse(isLogged);
     //let userName : any = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
 
-    //const userName = isLogged?.username;
-    const userName = user;
-    //console.log(user,'username2')
+    const userName = isLogged?.username;
+    //const userName = user;
+    console.log(userName,'username2')
     
     const [prompt, setPrompt] = useState("");
     const messageListRef = useRef<HTMLInputElement>(null);
@@ -41,8 +41,8 @@ function CompChat({chatId, user} : Props) {
     const [loadingText, setTextLoading] = useState(false);
     //let userName2 = useSelector((state: RootState) => state.auth);
    
-    const [messages,loading,error] = useCollection(query(
-      collection(db, 'users', userName, 'chats', chatId, 'messages'),
+    const [messages,loading, error] = useCollection(query(
+      userName && collection(db, 'users', userName, 'chats', chatId, 'messages'),
         orderBy("createAt", 'asc'),
     ))
 
@@ -131,19 +131,20 @@ function CompChat({chatId, user} : Props) {
           ]
         }
     
-        await fetch("https://api.openai.com/v1/chat/completions", 
+        await fetch("https://api.openai.com/v1/chat/completions",
         {
           method: "POST",
           headers: {
             "Authorization": "Bearer " + API_KEY,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(apiRequestBody)
+          body: JSON.stringify(apiRequestBody),
+          next: { revalidate: 10 }
         }).then((data) => {
                return data.json();
         }).then((data) => {
-          console.log(data,'ressss');
 
+          console.log(data);
 
           const messageChatGPT: Message = {
             text: data.choices[0].message.content || "chat gpt was unable to find an answer for that!",
@@ -168,22 +169,21 @@ function CompChat({chatId, user} : Props) {
           
         });
       }
+    
     return (
         <div className={styles.chatBox} ref={messageListRef}>
             <div className="text" >
-                    {error && <strong>Error: {JSON.stringify(error)}</strong>}
                     {messages?.empty && (
                         <>
-                            <p className="mt-10 text-center text-white">Type a prompt in below to get started!</p>
-                            <ArrowDownCircleIcon className="h-10 w-10 mx-auto mt-5 text-white animate-bounce"/>
+                            <p className="mt-10 text-center text-white">Can I help you?</p>
                         </>
                     )}
-                    {messages && messages?.docs.map((message) =>(
+                    {messages && messages?.docs.map((message : any) =>(
                         <Message key={message.id} message={message.data()} />
                     ) )}
                     { loading && (
-                            <p>loading...</p>
-                    )}
+                      <CompLoading/>
+                    )} 
 
                 { loadingText && (
                   <div className="py-5 text-white bg-[#434654]">

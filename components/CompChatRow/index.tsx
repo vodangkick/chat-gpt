@@ -11,11 +11,12 @@ import styles from './CompChatRow.module.scss';
 import { db } from "../../firebase"
 
 type Props = {
-    id : string
-    user: string
+    id : string,
+    user: string,
+    funcCloseMenu: Function
 }
 
-function ChatRow({id, user} : Props) {
+function ChatRow({id, user,funcCloseMenu} : Props) {
 
     const pathname = usePathname();
     const router = useRouter();
@@ -37,7 +38,7 @@ function ChatRow({id, user} : Props) {
     }
 
     return (
-        <Link href={`/chat/${id}`} className={`${styles.chatRow} chatRow justify-center ${active && 'bg-[#434654]'}`}>
+        <Link href={`/chat/${id}`} onClick={()=>funcCloseMenu()} className={`${styles.chatRow} chatRow justify-center ${active && 'bg-[#434654]'}`}>
             <ChatBubbleLeftIcon className="w-5 w-5" />
             <p className="flex-1 truncare pl-2">
                 {messages?.docs[messages?.docs.length - 1]?.data().text || "New chat"}

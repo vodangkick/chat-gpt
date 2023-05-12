@@ -18,7 +18,7 @@ function ChatPage({params: { id }} : Props) {
     return (
         <div className="flex flex-col h-screen min-w-500 w-full">
             
-            <Chat chatId= {id} user={userName} />
+            <Chat chatId= {id} />
         </div>
     )
 }
