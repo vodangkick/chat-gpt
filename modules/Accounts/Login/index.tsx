@@ -54,12 +54,13 @@ const LoginPage = () => {
       )}
       <form className={`${styles.loginForm}`} onSubmit={handleLogin}>
         <h1>Welcome Chat GPT</h1>
-        { error && <p className="mt-2 text-amber-500">Email or passwor is invalid</p>}
+        { error && <p className={styles.error}>Email or passwor is invalid</p>}
         <div>
           <input
             type="text"
             value={username}
             onChange={e => setUsernameState(e.target.value)}
+            placeholder="Username"
           />
         </div>
         <div>
@@ -67,6 +68,7 @@ const LoginPage = () => {
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
+            placeholder="Password"
           />
         </div>
         <button>Submit</button>

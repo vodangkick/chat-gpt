@@ -41,7 +41,7 @@ const RegisterPage = () => {
             <h1>Welcome Chat GPT</h1>
             <div className="mt-3">
               { error && Object.keys(error).map((key) =>
-                  <div className={`${styles2.error} text-amber-500`} key={key}>{key} {error[key]}</div>
+                  <div className={`${styles2.error} text-red-700`} key={key}>{key} {error[key]}</div>
               )}
             </div>
             <div>
@@ -49,6 +49,8 @@ const RegisterPage = () => {
                 type="text"
                 value={username}
                 onChange={e => setUsernameState(e.target.value)}
+                placeholder="Username"
+
                 />
             </div>
             <div>
@@ -56,6 +58,8 @@ const RegisterPage = () => {
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                placeholder="Email"
+
                 />
             </div>
             <div>
@@ -63,6 +67,7 @@ const RegisterPage = () => {
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
+                placeholder="Password"
                 />
             </div>
             <button onClick={() => handleRegister()}>Submit</button>

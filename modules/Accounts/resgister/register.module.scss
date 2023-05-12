@@ -1,3 +1,7 @@
-.error::first-letter {
-    text-transform: capitalize;
+.error {
+    color: red;
+    margin-top: 20px;
+    &:first-letter {
+        text-transform: capitalize;
+    }
 }
