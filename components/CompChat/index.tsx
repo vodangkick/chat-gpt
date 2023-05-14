@@ -12,11 +12,12 @@ import { useSelector } from 'react-redux';
 import styles from './CompChat.module.scss';
 import { TypeAnimation } from 'react-type-animation';
 import CompLoading from "../commons/CompLoading";
+import { FaTelegramPlane } from 'react-icons/fa';
 
 
 
 
-const API_KEY = "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";
+// const API_KEY = "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";
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
@@ -144,7 +145,7 @@ function CompChat({chatId} : Props) {
                return data.json();
         }).then((data) => {
 
-          console.log(data);
+          //console.log(data);
 
           const messageChatGPT: Message = {
             text: data.choices[0].message.content || "chat gpt was unable to find an answer for that!",
@@ -187,8 +188,10 @@ function CompChat({chatId} : Props) {
 
                 { loadingText && (
                   <div className="py-5 text-white bg-[#434654]">
-                      <div className="flex space-x-5 px-10 max-w-2xl mx-auto">
-                          <img src="https://links.papareact.com/2i6" alt="" className="h-8 w-8"/>
+                      <div className={`${styles.chatMessage} flex space-x-5 px-10 max-w-2xl mx-auto`}>
+                          <div className={styles.messAvata}>
+                            <img src="https://links.papareact.com/2i6" alt="" className="h-8 w-10"/>
+                          </div>
                           <p className="pt-1 text-sm">
                             <TypeAnimation
                                   sequence={[
@@ -215,7 +218,7 @@ function CompChat({chatId} : Props) {
                     onChange={(e) => setPrompt(e.target.value)}
                     type="text" />
                     <button>
-                        Submit
+                      <FaTelegramPlane className="text-white-400 w-10 h-10" />
                     </button>
                 </form>
                 <p>ChatGPT Mar 23 Version. Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts</p>

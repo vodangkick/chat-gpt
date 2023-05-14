@@ -7,7 +7,9 @@ import Header from '../../layout/header';
 import {
     setLocal
   } from '../../store/reducers/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import LoginPage from '../../modules/Accounts/Login';
+import { RootState } from '../../store/store';
 
 type Props = {
     children : React.ReactNode
@@ -30,22 +32,25 @@ export default function ContentPage({children} : Props) {
     }
 
     dispatch(setLocal());
+    const isLoggedIn : any = useSelector((state :  RootState) => state.auth.isLoggedIn)
+
+    console.log(isLogged?.isLogin,'login');
 
     return (
-        <>
-            <Header funcShowMenu={handleShowMenu} username={userName} />
+        <>  
+            { (isLogged === null) ? (
+                <LoginPage />
+            ) : (
+                <>   
+                    <Header funcShowMenu={handleShowMenu} username={userName} />
                     <div className="flex">
                         <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show} user={userName}/>
                         <div className="bg-[#343541] w-full">
                             {children}
                         </div>
                     </div>
-                    {/* <div className={`${styles.pageContent} flex` }>
-                        <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show}/>
-                        <div className="lg:w-[calc(100%-260px)] flex-col flex h-screen bg-gray-700 flex-1">
-                            {children}
-                        </div>
-                    </div> */}
+                </>
+            )}
         </>
     )
 }

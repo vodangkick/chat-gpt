@@ -25,8 +25,6 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
       isLogged = JSON.parse(isLogged);
     }
 
-    console.log(handeShow);
-
     const userName = isLogged?.username;
     //const userName = user;
     //console.log(userName,'test');
@@ -41,7 +39,6 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
     const dispatch = useDispatch();
     const handleLogOut = () => {
         dispatch(logout());
-        router.replace('/login');
     }
     
 

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.scss';
@@ -13,7 +15,7 @@ import github from '../../../images/github.png';
 
 const LoginPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
+  //const router = useRouter();
   const [username, setUsernameState] = useState<any>('');
   const [password, setPassword] = useState<any>('');
   const error = useSelector((state: RootState) => state.auth.error);
@@ -21,11 +23,11 @@ const LoginPage = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const isLogged = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
 
-  useEffect(() => {
-    if(isLogged === 'true' || isLoggedIn === true) {
-      router.replace('/');
-    }
-  },[isLoggedIn])
+  // useEffect(() => {
+  //   if(isLogged === 'true' || isLoggedIn === true) {
+  //     router.replace('/');
+  //   }
+  // },[isLoggedIn])
 
   const handleLogin = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { useCollection } from "react-firebase-hooks/firestore"
 import styles from './CompChatRow.module.scss';
 
+
 import { db } from "../../firebase"
 
 type Props = {
@@ -21,10 +22,10 @@ function ChatRow({id, user,funcCloseMenu} : Props) {
     const pathname = usePathname();
     const router = useRouter();
     const [active, setAvtive] = useState(false);
-    const username = 'user3';
+    //const username = 'user3';
 
     const [messages] = useCollection(
-        collection(db, 'users', username, 'chats', id,'messages'),
+        collection(db, 'users', user, 'chats', id,'messages'),
     )
     useEffect(() => {
         if(!pathname) return;

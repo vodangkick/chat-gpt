@@ -5,6 +5,11 @@ import SyntaxHighlighter  from 'react-syntax-highlighter';
 import { atomOneDark ,docco, darcula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import hljs from 'highlight.js';
 import Parser from 'html-react-parser';
+import Image from "next/dist/client/image";
+import styles from './CompMessage.module.scss';
+import imgUser from '../../images/user.png';
+
+
 
 
 type Props = {
@@ -41,10 +46,18 @@ function Message({message}: Props) {
     //console.log(newArray);
 
     return (
-        <div className={`py-5 text-white ${isChatGPT && "bg-[#434654]"}`}>
+        <div className={`${styles.chatMessage} py-5 text-white ${isChatGPT && "bg-[#434654]"}`}>
             <div className="flex space-x-5 px-10 max-w-2xl mx-auto">
-                <img src="https://links.papareact.com/2i6" alt="" className="h-8 w-8"/>
-                   
+                    { isChatGPT ? (
+                        <div className={`${styles.messAvata}`}>
+                            <Image src='https://links.papareact.com/2i6' alt="aaa" width={30} height={30} className="h-8 w-10" />
+                        </div>
+                        ) : (
+
+                        <div className={`${styles.messAvata}`}>
+                            <Image src={imgUser} alt="" width={32} height={32}/>
+                        </div>
+                    )}
                     {/* {highlightedCode} */}
                 <p className="pt-1 text-sm leading-loose" style={{whiteSpace: 'break-spaces',lineHeight: '18px' }}>
                     {message.text}

@@ -2,11 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  username: '',
+  username: null,
   isLoading: false,
   isLoggedIn: false,
   error: null,
-  token:''
+  token: null
 };
 
 export const login = createAsyncThunk('user/login',
@@ -46,6 +46,8 @@ const authSlice = createSlice({
     isLogged = JSON.parse(isLogged);
     //console.log(isLogged,'auth');
     state.username = isLogged?.username;
+    //state.isLoggedIn = isLogged?.isLogin;
+
     
     },
     logout: () => {

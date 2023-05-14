@@ -1,3 +1,5 @@
+@import '../../styles/mixin-color.scss';
+
 .chatBox {
     height: 100vh;
     overflow-y: auto;
@@ -26,7 +28,9 @@
     }
 
     button {
-        display: none;
+        margin-right: 15px;
+        color: $color-white;
+        opacity: 0.6;
     }
 
     form {
@@ -44,4 +48,16 @@
         text-align: center;
     }
 
+}
+
+.chatMessage {
+    .messAvata {
+        width: 40px;
+        overflow: hidden;
+        border-radius: 4px;
+        display: flex;
+        flex: 40px 0 0;
+        height: 32px;
+        justify-content: space-around;
+    }
 }
