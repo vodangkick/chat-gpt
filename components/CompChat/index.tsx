@@ -17,7 +17,7 @@ import { FaTelegramPlane } from 'react-icons/fa';
 
 
 
-// const API_KEY = "";
+
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
 }
@@ -32,15 +32,15 @@ function CompChat({chatId} : Props) {
     //let userName : any = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
 
-    const userName = isLogged?.username;
+    //const userName = isLogged?.username;
     //const userName = user;
-    console.log(userName,'username2')
+    //console.log(userName,'username2')
     
     const [prompt, setPrompt] = useState("");
     const messageListRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLInputElement>(null)
     const [loadingText, setTextLoading] = useState(false);
-    //let userName2 = useSelector((state: RootState) => state.auth);
+    let userName : any = useSelector((state: RootState) => state.auth.username);
    
     const [messages,loading, error] = useCollection(query(
       userName && collection(db, 'users', userName, 'chats', chatId, 'messages'),
@@ -218,7 +218,7 @@ function CompChat({chatId} : Props) {
                     onChange={(e) => setPrompt(e.target.value)}
                     type="text" />
                     <button>
-                      <FaTelegramPlane className="text-white-400 w-10 h-10" />
+                      <FaTelegramPlane className="text-white-400 w-7 h-7" />
                     </button>
                 </form>
                 <p>ChatGPT Mar 23 Version. Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts</p>

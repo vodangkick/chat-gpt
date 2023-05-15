@@ -27,13 +27,13 @@ export default function Header({funcShowMenu, username} : Props) {
     return (
         <div className={`${styles.header} p-2`}>
             <div className={styles.toggleMobile}>
-                <FaBars className="cursor-pointer hover:opacity-7" onClick={() => funcShowMenu()} />
+                <FaBars className="cursor-pointer hover:opacity-7 h-7 w-7" onClick={() => funcShowMenu()} />
             </div>
             <div>
                 New Chat
             </div>
             <div className="cursor-pointer hover:opacity-7"  onClick={() => createNewChat()}>
-                <AiOutlinePlus />
+                <AiOutlinePlus className="h-7 w-7" />
             </div>
         </div>
     )

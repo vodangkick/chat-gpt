@@ -20,16 +20,18 @@ type Props = {
     user: String
 }
 function Sidebar({funcCloseMenu, handeShow, user} : Props) {
-    let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
-    if(isLogged) {
-      isLogged = JSON.parse(isLogged);
-    }
+    // let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
+    // if(isLogged) {
+    //   isLogged = JSON.parse(isLogged);
+    // }
 
-    const userName = isLogged?.username;
+    // const userName = isLogged?.username;
     //const userName = user;
     //console.log(userName,'test');
-    //const userName = 'user3';
-    //const userName = useSelector((state: RootState) => state.auth.username)
+    //const userName = user;
+    const userName : any = useSelector((state: RootState) => state?.auth?.username)
+
+    console.log(user,'user2')
     
     const [chats, loading, error] = useCollection(
         userName && collection(db,'users', userName,"chats")

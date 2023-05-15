@@ -16,11 +16,11 @@ type Props = {
 }
 
 export default function ContentPage({children} : Props) {
-    let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
-    if(isLogged) {
-      isLogged = JSON.parse(isLogged);
-    }
-    const userName = isLogged?.username;
+    // let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
+    // if(isLogged) {
+    //   isLogged = JSON.parse(isLogged);
+    // }
+    // const userName = isLogged?.username;
     const dispatch = useDispatch()
 
     const [show, setShow] = useState(false);
@@ -31,20 +31,20 @@ export default function ContentPage({children} : Props) {
         setShow(false);
     }
 
-    dispatch(setLocal());
-    const isLoggedIn : any = useSelector((state :  RootState) => state.auth.isLoggedIn)
+    // dispatch(setLocal());
+    const isLogged : any = useSelector((state :  RootState) => state.auth)
 
-    console.log(isLogged?.isLogin,'login');
+    console.log(isLogged,'login content');
 
     return (
         <>  
-            { (isLogged === null) ? (
+            { (!isLogged.isLoggedIn) ? (
                 <LoginPage />
             ) : (
                 <>   
-                    <Header funcShowMenu={handleShowMenu} username={userName} />
+                    <Header funcShowMenu={handleShowMenu} username={isLogged?.username} />
                     <div className="flex">
-                        <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show} user={userName}/>
+                        <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show} user={isLogged?.username}/>
                         <div className="bg-[#343541] w-full">
                             {children}
                         </div>

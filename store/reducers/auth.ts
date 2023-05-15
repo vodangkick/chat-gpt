@@ -61,9 +61,9 @@ const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled,(state,action) => {
       state.isLoggedIn = true;
-      const { user } = action.payload.data;
-      localStorage.setItem('isLogin',`{"isLogin":"true","username":"${user.username}","token":"${user.token}"}`);
-      sessionStorage.setItem("item_key", "user2");
+      const { user : { username , token} } = action.payload.data;
+      state.username = username;
+      state.token = token;
       
     });
     builder.addCase(login.rejected,(state, action : any ) => {
