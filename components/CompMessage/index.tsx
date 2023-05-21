@@ -8,7 +8,7 @@ import Parser from 'html-react-parser';
 import Image from "next/dist/client/image";
 import styles from './CompMessage.module.scss';
 import imgUser from '../../images/user.png';
-
+import {SiOpenai} from 'react-icons/si'
 
 
 
@@ -46,11 +46,11 @@ function Message({message}: Props) {
     //console.log(newArray);
 
     return (
-        <div className={`${styles.chatMessage} py-5 text-white ${isChatGPT && "bg-[#434654]"}`}>
+        <div className={`${styles.chatMessage} py-5 text-white ${isChatGPT && `bg-[#434654] ${styles.messOfChat}`}`}>
             <div className="flex space-x-5 px-10 max-w-2xl mx-auto">
                     { isChatGPT ? (
                         <div className={`${styles.messAvata}`}>
-                            <Image src='https://links.papareact.com/2i6' alt="aaa" width={30} height={30} className="h-8 w-10" />
+                            <SiOpenai className="h-5 w5"/>
                         </div>
                         ) : (
 

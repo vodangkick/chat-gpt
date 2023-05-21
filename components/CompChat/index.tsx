@@ -13,10 +13,11 @@ import styles from './CompChat.module.scss';
 import { TypeAnimation } from 'react-type-animation';
 import CompLoading from "../commons/CompLoading";
 import { FaTelegramPlane } from 'react-icons/fa';
+import { SiOpenai } from 'react-icons/si';
 
 
 
-
+const API_KEY = "";
 
 const systemMessage = { 
   "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
@@ -188,9 +189,9 @@ function CompChat({chatId} : Props) {
 
                 { loadingText && (
                   <div className="py-5 text-white bg-[#434654]">
-                      <div className={`${styles.chatMessage} flex space-x-5 px-10 max-w-2xl mx-auto`}>
+                      <div className={`${styles.chatMessage} ${styles.messOfChat} flex space-x-5 px-10 max-w-2xl mx-auto`}>
                           <div className={styles.messAvata}>
-                            <img src="https://links.papareact.com/2i6" alt="" className="h-8 w-10"/>
+                            <SiOpenai className="h-5 w5"/>
                           </div>
                           <p className="pt-1 text-sm">
                             <TypeAnimation
