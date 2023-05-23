@@ -7,10 +7,11 @@ import { db } from '../../firebase';
 
 type Props = {
     id : string,
-    username: string
+    username: string,
+    className: string | undefined
 }
 
-function NewChat({id, username} : Props) {
+function NewChat({id, username, className} : Props) {
     const router = useRouter();
     const createNewChat = async () => {
         const  doc = await addDoc(collection(db,"users", username, "chats"),{
@@ -21,8 +22,8 @@ function NewChat({id, username} : Props) {
 
     }
     return (
-        <div onClick={createNewChat} className="mt-2 border-gray-700 border chatRow mb-2">
-            <PlusIcon className="w-4 h-4" />
+        <div onClick={createNewChat} className={`${className ? className : ''} mt-2 border-gray-700 border chatRow mb-2`}>
+            <PlusIcon className="w-4 h-4 mr-2" />
             <p>New Chat</p>
         </div>
     )

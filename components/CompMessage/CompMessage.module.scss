@@ -2,15 +2,14 @@
 
 .chatMessage {
     .messAvata {
-        width: 40px;
         overflow: hidden;
         border-radius: 4px;
         display: flex;
-        flex: 40px 0 0;
-        height: 32px;
+        flex: 35px 0 0;
+        height: 35px;
         justify-content: space-around;
         align-items: center;
-        
+        background-color: $color-green-2;
     }
 
     &.messOfChat {

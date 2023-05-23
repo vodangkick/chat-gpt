@@ -25,15 +25,15 @@ export default function Header({funcShowMenu, username} : Props) {
     }
     
     return (
-        <div className={`${styles.header} p-2`}>
+        <div className={`${styles.header} p-2 fixed w-full`}>
             <div className={styles.toggleMobile}>
-                <FaBars className="cursor-pointer hover:opacity-7 h-7 w-7" onClick={() => funcShowMenu()} />
+                <FaBars className="cursor-pointer hover:opacity-7 h-8 w-8" onClick={() => funcShowMenu()} />
             </div>
-            <div>
+            <div className="text2xl">
                 New Chat
             </div>
             <div className="cursor-pointer hover:opacity-7"  onClick={() => createNewChat()}>
-                <AiOutlinePlus className="h-7 w-7" />
+                <AiOutlinePlus className="h-8 w-8" />
             </div>
         </div>
     )

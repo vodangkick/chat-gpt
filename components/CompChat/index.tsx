@@ -28,14 +28,8 @@ type Props = {
 }
 
 function CompChat({chatId} : Props) {
-    let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
-    isLogged = JSON.parse(isLogged);
-    //let userName : any = typeof window !== 'undefined' ? localStorage.getItem('username') : null
-
-
-    //const userName = isLogged?.username;
-    //const userName = user;
-    //console.log(userName,'username2')
+    // let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
+    // isLogged = JSON.parse(isLogged);
     
     const [prompt, setPrompt] = useState("");
     const messageListRef = useRef<HTMLInputElement>(null);
@@ -132,6 +126,17 @@ function CompChat({chatId} : Props) {
             ...apiMessages 
           ]
         }
+
+        // await fetch("https://api.openai.com/v1/chat/completions",
+        // {
+        //   method: "POST",
+        //   headers: {
+        //     "Authorization": "Bearer " + API_KEY,
+        //     "Content-Type": "application/json"
+        //   },
+        //   body: JSON.stringify(apiRequestBody),
+        //   next: { revalidate: 10 }
+        // }).then((data) => {
     
         await fetch("https://api.openai.com/v1/chat/completions",
         {
@@ -145,9 +150,6 @@ function CompChat({chatId} : Props) {
         }).then((data) => {
                return data.json();
         }).then((data) => {
-
-          //console.log(data);
-
           const messageChatGPT: Message = {
             text: data.choices[0].message.content || "chat gpt was unable to find an answer for that!",
             createAt: serverTimestamp(),
@@ -160,6 +162,7 @@ function CompChat({chatId} : Props) {
           addChatGpt(messageChatGPT); 
           if (inputRef.current !== null) { 
             inputRef.current.disabled = false;
+            inputRef.current.focus();
           }
 
           setTextLoading(false);
@@ -169,6 +172,29 @@ function CompChat({chatId} : Props) {
             sender: "ChatGPT"
           }]);
           
+        }).catch(error => {
+
+          if (inputRef.current !== null) { 
+            inputRef.current.disabled = false;
+            inputRef.current.focus();
+          }
+
+          setMessages([...chatMessages, {
+            message: 'errror',
+            sender: "ChatGPT"
+          }]);
+
+          const messageChatGPT: Message = {
+            text: "Chat gpt was unable to find an answer for that!",
+            createAt: serverTimestamp(),
+            user: {
+                _id : "chatGPT",
+                name: "chatGPT",
+                avata: "https://links.papareact.com/2i6"
+            }
+          }
+          addChatGpt(messageChatGPT); 
+          setTextLoading(false);
         });
       }
     
@@ -213,7 +239,8 @@ function CompChat({chatId} : Props) {
 
             <div className={`${styles.chatInput} md:dark:border-transparent`}   >
                 <form className="flex" onSubmit={handleSend}>
-                    <input placeholder="Send a meesage..."
+                    <input
+                    placeholder={!loadingText ? 'Send a meesage...' : 'Please Waiting......'}
                     value={prompt}
                     ref={inputRef}
                     onChange={(e) => setPrompt(e.target.value)}

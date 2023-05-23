@@ -44,9 +44,7 @@ const authSlice = createSlice({
     setLocal : (state)=> {
     let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
     isLogged = JSON.parse(isLogged);
-    //console.log(isLogged,'auth');
     state.username = isLogged?.username;
-    //state.isLoggedIn = isLogged?.isLogin;
 
     
     },
@@ -75,8 +73,9 @@ const authSlice = createSlice({
     });
     builder.addCase(register.fulfilled,(state, action : any) => {
       state.isLoggedIn = true;
-      const { user } = action.payload.data;
-      localStorage.setItem('isLogin',`{"isLogin":"true","username":"${user.username}","token":"${user.token}"}`);
+      const { user : { username, token } } = action.payload.data;
+      state.username = username;
+      state.token = token;
     });
     builder.addCase(register.rejected,(state, action : any) => {
       state.isLoading = false;

@@ -8,7 +8,8 @@ import Parser from 'html-react-parser';
 import Image from "next/dist/client/image";
 import styles from './CompMessage.module.scss';
 import imgUser from '../../images/user.png';
-import {SiOpenai} from 'react-icons/si'
+import { SiOpenai } from 'react-icons/si';
+import { BiUserCircle } from 'react-icons/bi';
 
 
 
@@ -50,12 +51,13 @@ function Message({message}: Props) {
             <div className="flex space-x-5 px-10 max-w-2xl mx-auto">
                     { isChatGPT ? (
                         <div className={`${styles.messAvata}`}>
-                            <SiOpenai className="h-5 w5"/>
+                            <SiOpenai className="h-7 w-5"/>
                         </div>
                         ) : (
 
                         <div className={`${styles.messAvata}`}>
-                            <Image src={imgUser} alt="" width={32} height={32}/>
+                            <BiUserCircle className="h-7 w-5" />
+                            {/* <Image src={imgUser} alt="" width={32} height={32}/> */}
                         </div>
                     )}
                     {/* {highlightedCode} */}

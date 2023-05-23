@@ -5,8 +5,8 @@
     margin: 30px auto 0;
 
     .error {
-        color: red;
-        margin-top: 20px;
+       margin-top: 20px;
+       color: red;
     }
 
     h1 {
@@ -78,4 +78,15 @@
             height: 20px;
         }
     }
+}
+
+.groupInput {
+    position: relative;
+}
+
+.showPass {
+    position: absolute;
+    top: 33px;
+    cursor: pointer;
+    right: 8px;
 }

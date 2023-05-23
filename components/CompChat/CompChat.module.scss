@@ -11,6 +11,10 @@
         overflow-y: auto;
         max-height: 100%;
     }
+
+    @include mq(lg, max) {
+      padding-top: 53px;
+    }
 }
 
 .chatInput {
@@ -52,12 +56,11 @@
 
 .chatMessage {
     .messAvata {
-        width: 40px;
         overflow: hidden;
         border-radius: 4px;
         display: flex;
-        flex: 40px 0 0;
-        height: 32px;
+        flex: 35px 0 0;
+        height: 35px;
         justify-content: space-around;
         align-items: center;
     }

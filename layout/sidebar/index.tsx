@@ -11,6 +11,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import { logout } from '../../store/reducers/auth';
 import styles from './sidebar.module.scss';
 import { AiOutlineClose, AiOutlineImport } from "react-icons/ai";
+import { IoMdClose } from "react-icons/io";
+
 import { RootState } from '../../store/store';
 import CompLoading from '../../components/commons/CompLoading';
 
@@ -27,11 +29,10 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
 
     // const userName = isLogged?.username;
     //const userName = user;
-    //console.log(userName,'test');
     //const userName = user;
     const userName : any = useSelector((state: RootState) => state?.auth?.username)
-
-    console.log(user,'user2')
+    console.log(userName,'test');
+    
     
     const [chats, loading, error] = useCollection(
         userName && collection(db,'users', userName,"chats")
@@ -45,12 +46,12 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
     
 
     return (
-        <div className={`${styles.sidebar} ${handeShow && styles.openMenu} h-screen overflow-y-auto`}>
+        <div className={`${styles.sidebar} ${handeShow && styles.openMenu} h-screen`}>
             <div className={`p-2 flex flex-col h-screen`}>
                 <div className="flex-1">
-                    <NewChat id='' username={userName} />
-                    <div className={styles.closeToggle} onClick={()=>funcCloseMenu()} >
-                        x
+                    <NewChat id='' username={userName} className="" />
+                    <div className={`${styles.closeToggle} text-3xl`} onClick={()=>funcCloseMenu()} >
+                        <IoMdClose />
                     </div>
                     <div className={`${styles.contentRow} flex flex-col space-y-2 my-2`}>
                         { loading && (
