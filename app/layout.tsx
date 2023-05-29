@@ -1,6 +1,9 @@
+'use client';
 import '../styles/globals.css'
 import { Providers } from "./provider";
-import ContentPage from '../components/ContentPage'
+import ContentPage from '../components/ContentPage';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 
 
@@ -15,6 +18,7 @@ export default async function RootLayout({
   children: React.ReactNode
 
 }) {
+  const theme = useSelector((state:RootState) => state.setting.theme);
 
   return (
     <html lang="en">

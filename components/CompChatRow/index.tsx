@@ -1,7 +1,8 @@
 'use client'
 import { ChatBubbleLeftIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { doc, collection, deleteDoc } from "firebase/firestore"
-import Link from "next/link"
+import { doc, collection, deleteDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation"
 import { Router } from "next/router"
 import { useEffect, useState } from "react"
@@ -9,7 +10,7 @@ import { useCollection } from "react-firebase-hooks/firestore"
 import styles from './CompChatRow.module.scss';
 
 
-import { db } from "../../firebase"
+
 
 type Props = {
     id : string,

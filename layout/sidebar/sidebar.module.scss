@@ -70,5 +70,39 @@
             margin-right: 10px;
         }
     }
+
+    .menuBottom {
+        position: absolute;
+        background-color: $color-black;
+        width: calc(100% - 20px);
+        left: 10px;
+        border-radius: 10px;
+        padding: 10px 10px;
+        bottom: 55px;
+        transition: all .4s ease;
+        opacity: 0;
+        z-index: -1;
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid $color-gray-2;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            &:hover {
+               background-color: $color-gray-2; 
+            }
+
+            &:last-child {
+                border: none;
+            }
+        }
+
+        &.openMenu {
+            opacity: 1;
+            bottom: 60px;
+            z-index: 2;
+        }
+    }
     
 }

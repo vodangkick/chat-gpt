@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoginPage from '../../modules/Accounts/Login';
 import { RootState } from '../../store/store';
 import LoadingFull from '../commons/CompLoading/LoadingFull';
+import ComPopup from '../commons/CompPopup';
 
 type Props = {
     children : React.ReactNode
@@ -33,8 +34,6 @@ export default function ContentPage({children} : Props) {
     useEffect(() => {
         setLoading(true)
     },[])
-
-    // dispatch(setLocal());
     const isLogged : any = useSelector((state :  RootState) => state.auth)
 
     return (
@@ -52,6 +51,7 @@ export default function ContentPage({children} : Props) {
                             {children}
                         </div>
                     </div>
+                    <ComPopup />
                 </>
             )}
         </>

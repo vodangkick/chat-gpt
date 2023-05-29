@@ -1,20 +1,26 @@
 'use client'
 
-import {useCollection} from 'react-firebase-hooks/firestore';
-import React from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import React,{ useState, useRef, useEffect } from 'react';
 import NewChat from '../../components/CompNewChat';
 import { db } from '../../firebase';
-import { collection } from 'firebase/firestore';
+import { collection, deleteDoc, doc } from 'firebase/firestore';
 import ChatRow from '../../components/CompChatRow';
 import { useRouter } from 'next/navigation';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/reducers/auth';
 import styles from './sidebar.module.scss';
-import { AiOutlineClose, AiOutlineImport } from "react-icons/ai";
+import { AiOutlineClose,AiTwotoneDelete, AiOutlineImport, AiFillSetting, AiOutlineUser } from "react-icons/ai";
+import { BiSupport } from 'react-icons/bi';
 import { IoMdClose } from "react-icons/io";
-
+import Link from "next/link"
 import { RootState } from '../../store/store';
 import CompLoading from '../../components/commons/CompLoading';
+import ComPopup from '../../components/commons/CompPopup';
+import { setPopup } from '../../store/reducers/setting';
+import { DocumentData } from "firebase/firestore";
+
+
 
 type Props = {
     funcCloseMenu: Function,
@@ -22,26 +28,46 @@ type Props = {
     user: String
 }
 function Sidebar({funcCloseMenu, handeShow, user} : Props) {
-    // let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
-    // if(isLogged) {
-    //   isLogged = JSON.parse(isLogged);
-    // }
+    const userName : any = useSelector((state: RootState) => state?.auth?.username);
+    const [ showMenu, setShowMenu ] = useState<boolean>(false);
+    const dispatch = useDispatch();
+    const refMenuBottom = useRef<any>(null);
 
-    // const userName = isLogged?.username;
-    //const userName = user;
-    //const userName = user;
-    const userName : any = useSelector((state: RootState) => state?.auth?.username)
-    console.log(userName,'test');
-    
-    
     const [chats, loading, error] = useCollection(
         userName && collection(db,'users', userName,"chats")
     );
 
     const router = useRouter();
-    const dispatch = useDispatch();
     const handleLogOut = () => {
         dispatch(logout());
+    }
+    const handleShowMenuBottom = () => {
+        if(showMenu === false) {
+            setShowMenu(true);
+        }else if(showMenu === true){
+            setShowMenu(false);
+        }
+    }
+    const handleShowPopup = () => {
+        dispatch(setPopup(true));
+        setShowMenu(false);
+    }
+
+    const removeChat = () => {
+        chats?.docs.forEach(async (item : DocumentData ) => {
+            await deleteDoc(doc(db, 'users', userName, 'chats', item?.id));
+        })
+        setShowMenu(false);
+    }
+
+    useEffect(() => {
+        document.addEventListener("click", handleOutside, true)
+    }, [])
+
+    const handleOutside = (e:any) => {
+        if(!refMenuBottom?.current?.contains(e.target)) {
+            setShowMenu(false);
+        }
     }
     
 
@@ -63,8 +89,30 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
                     </div>
                 </div>
                 <div className={`${styles.logOut} text-gray-700 flex items-center`} >
-                    <AiOutlineImport className="flex flex-col mr-2 h-4 w-4" />
-                    <p className="flex flex-col" onClick={()=> handleLogOut()} >Logout</p>
+                    <div className="flex items-center" onClick={() => handleShowMenuBottom()}>
+                        <AiOutlineUser className="flex flex-col mr-2 h-4 w-4" />
+                        <p className="flex flex-col" >{userName}</p>         
+                    </div>
+                    <ul ref={refMenuBottom} className={`${styles.menuBottom} ${showMenu && styles.openMenu}`} >
+                        <li>
+                            <Link className="flex" href="mailto:quang115thd@gmail.com">
+                                <BiSupport className="flex flex-col mr-2 h-4 w-4" />
+                                <span>Help & FAQ</span>
+                            </Link>
+                        </li>
+                        <li onClick={() => removeChat()} >
+                            <AiTwotoneDelete className="flex flex-col mr-2 h-4 w-4" />
+                            <span>Clear Chat</span>
+                        </li>
+                        <li onClick={()=>handleShowPopup()}>
+                            <AiFillSetting  className="flex flex-col mr-2 h-4 w-4" />
+                            <span>Setting</span>
+                        </li>
+                        <li>
+                            <AiOutlineImport className="flex flex-col mr-2 h-4 w-4" />
+                            <span onClick={()=> handleLogOut()} >Log out</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

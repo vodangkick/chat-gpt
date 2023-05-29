@@ -45,8 +45,6 @@ const authSlice = createSlice({
     let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
     isLogged = JSON.parse(isLogged);
     state.username = isLogged?.username;
-
-    
     },
     logout: () => {
       localStorage.removeItem('isLogin');
@@ -62,7 +60,6 @@ const authSlice = createSlice({
       const { user : { username , token} } = action.payload.data;
       state.username = username;
       state.token = token;
-      
     });
     builder.addCase(login.rejected,(state, action : any ) => {
       state.isLoading = false;

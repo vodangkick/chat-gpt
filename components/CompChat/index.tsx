@@ -14,6 +14,7 @@ import { TypeAnimation } from 'react-type-animation';
 import CompLoading from "../commons/CompLoading";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { SiOpenai } from 'react-icons/si';
+import axios from 'axios';
 
 
 
@@ -37,7 +38,7 @@ function CompChat({chatId} : Props) {
     const [loadingText, setTextLoading] = useState(false);
     let userName : any = useSelector((state: RootState) => state.auth.username);
    
-    const [messages,loading, error] = useCollection(query(
+    const [messages, loading, error] = useCollection(query(
       userName && collection(db, 'users', userName, 'chats', chatId, 'messages'),
         orderBy("createAt", 'asc'),
     ))
@@ -137,6 +138,18 @@ function CompChat({chatId} : Props) {
         //   body: JSON.stringify(apiRequestBody),
         //   next: { revalidate: 10 }
         // }).then((data) => {
+        // console.log(apiRequestBody,'aaa');
+        // await axios.post('https://api.openai.com/v1/chat/completions',{
+        //   headers: {
+        //     "Authorization": "Bearer " + API_KEY,
+        //     "Content-Type": "application/json"
+        //   },
+        //   data: apiRequestBody
+        // }).then(res => {
+        //   console.log(res,'axios')
+        // }).catch(error => {
+        //   console.log(error,'error ')
+        // })
     
         await fetch("https://api.openai.com/v1/chat/completions",
         {
@@ -206,7 +219,7 @@ function CompChat({chatId} : Props) {
                             <p className="mt-10 text-center text-white">Can I help you?</p>
                         </>
                     )}
-                    {messages && messages?.docs.map((message : any) =>(
+                    {messages && messages?.docs.map((message : any) => (
                         <Message key={message.id} message={message.data()} />
                     ) )}
                     { loading && (
@@ -217,7 +230,7 @@ function CompChat({chatId} : Props) {
                   <div className="py-5 text-white bg-[#434654]">
                       <div className={`${styles.chatMessage} ${styles.messOfChat} flex space-x-5 px-10 max-w-2xl mx-auto`}>
                           <div className={styles.messAvata}>
-                            <SiOpenai className="h-5 w5"/>
+                            <SiOpenai className="h-7 w-5"/>
                           </div>
                           <p className="pt-1 text-sm">
                             <TypeAnimation

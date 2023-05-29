@@ -1,0 +1,114 @@
+@import '../../../styles/mixin-color.scss';
+
+.popUp {
+    opacity: 0;
+    z-index: -1;
+    display: flex;
+    transition: all 0.3s ease-out;
+    color: $color-white;
+
+    .popUpContainer{
+        transition: all 0.2s ease-in-out; 
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    .popUpHeader{
+       border-bottom: 1px solid $color-gray-2;
+       margin-bottom: 10px;
+       width: 100%;
+       display: flex;
+       justify-content: space-between;
+       padding-bottom: 15px;
+    }
+
+    .popUpLeft {
+        .menuTags {
+            width: 90%;
+            
+            li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 5px;
+                font-size: 0.9em;
+                padding: 5px;
+                cursor: pointer;
+
+                &.activeTag {
+                    background: $color-gray-2;
+                    color: $color-white;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+
+    &.openPopup {
+        opacity: 1;
+        z-index: 3;
+
+        .popUpContainer {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}
+
+.popUpClose {
+    transition: all 0.4s ease;
+    cursor: pointer;
+    
+    &:hover {
+        transform: rotate(90deg);
+    }
+}
+
+.contentTag {
+   width: 100%;
+   font-size: 0.9rem;
+
+   ul {
+    width: 100%;
+       li {
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 15px 0px;
+           border-bottom: 1px solid $color-gray-2;
+
+           select {
+               background: transparent;
+               border: 1px solid $color-gray-2;
+               padding: 7px 10px;
+               color: $color-white;
+
+               option {
+                   //color: $color-gray-2;
+                    background: #111827;
+                    border: 1px solid $color-gray-2;
+
+               }
+           }
+
+           &:last-child {
+               border: none;
+           }
+
+           &:first-child {
+                padding-top: 0px;
+           }
+
+           span {
+               display: flex;
+           }
+
+           button {
+               background: $color-red-2;
+               color: $color-white;
+               text-align: center;
+               padding: 5px 10px;
+               border-radius:4px;
+           }
+       }
+   } 
+}
+
