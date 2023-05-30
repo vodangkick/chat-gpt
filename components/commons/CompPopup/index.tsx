@@ -7,19 +7,42 @@ import { AiFillSetting } from "react-icons/ai";
 import { BsFillDatabaseFill } from 'react-icons/bs'
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import setting, { setPopup } from '../../../store/reducers/setting';
+import setting, { setPopup, setTheme } from '../../../store/reducers/setting';
 import { RootState } from '../../../store/store';
+import { collection, deleteDoc, doc, DocumentData } from 'firebase/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { db } from '../../../firebase';
+
 
 
 export default function ComPopup() {
-    const popup = useSelector((state: RootState) => state.setting.popup);
+    const popup : boolean = useSelector((state: RootState) => state.setting.popup);
+    const themeRoot : string = useSelector((state: RootState) => state.setting.themeRoot);
+    const userName : any = useSelector((state: RootState) => state?.auth?.username);
+
     const [tab, setTag] = useState('general');
     const dispatch = useDispatch();
+
     const handleShowPopup = ()=> {
         dispatch(setPopup(false));
     }
     const handleTagActive = ( value :  string)=> {
         setTag(value);
+    }
+
+    const handleTheme = (value : string)=> {
+        console.log(value);
+        dispatch(setTheme(value));
+    }
+
+    const [chats, loading, error] = useCollection(
+        userName && collection(db,'users', userName,"chats")
+    );
+
+    const removeChat = () => {
+        chats?.docs.forEach(async (item : DocumentData ) => {
+            await deleteDoc(doc(db, 'users', userName, 'chats', item?.id));
+        })
     }
     
     return (
@@ -50,16 +73,15 @@ export default function ComPopup() {
                                         <li>
                                             <span>Theme</span>
                                             <span>
-                                                <select id="countries" className="text-black rounded border border-black/10 bg-transition">
-                                                    <option selected value="US">System</option>
-                                                    <option value="CA">Dark</option>
-                                                    <option value="FR">Light</option>
+                                                <select onChange={(e) => handleTheme(e.target.value)} id="countries" className="text-black rounded border border-black/10 bg-transition">
+                                                    <option selected value="dark">Dark</option>
+                                                    <option value="light">Light</option>
                                                 </select>
                                             </span>
                                         </li>
                                         <li>
                                             <span>Clear all chats</span>
-                                            <span>
+                                            <span onClick={() => removeChat()}>
                                                 <button>Clear</button>
                                             </span>
                                         </li>
@@ -69,7 +91,7 @@ export default function ComPopup() {
                             ) }
                             {tab === 'data' && (
                                 <div>
-                                    Control Data
+                                    The feature working ...
                                 </div>
                             ) }
                         </div>

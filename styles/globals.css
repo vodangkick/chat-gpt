@@ -33,3 +33,38 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+
+.bgContent {
+  background: #343541;
+  opacity: 1;
+  color: white;
+}
+
+.bgContent p{
+  color: white;
+}
+
+.light .bgContent {
+    background: white;
+}
+
+.light .bgContent p{
+    color: black;
+
+}
+.bgContent .bgMessChat {
+  background: #434654;
+}
+.light .bgContent .bgMessChat {
+  background: #F7F7F8;
+  border-bottom: 1px solid #D9D9E3;
+  border-top: 1px solid #D9D9E3;
+}
+
+.chatForm {
+  background-image: linear-gradient(rgba(53, 55, 64, 0), rgb(53, 55, 64) 58.85%);
+}
+
+.light .chatForm{
+  background: transparent;
+}

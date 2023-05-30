@@ -13,6 +13,7 @@
     "firebase-admin": "^11.5.0",
     "highlight.js": "^11.8.0",
     "html-react-parser": "^3.0.16",
+    "i18next": "^22.5.0",
     "next": "latest",
     "next-redux-wrapper": "^8.1.0",
     "openai": "^3.2.1",

@@ -1,4 +1,3 @@
-'use client';
 import '../styles/globals.css'
 import { Providers } from "./provider";
 import ContentPage from '../components/ContentPage';
@@ -18,13 +17,12 @@ export default async function RootLayout({
   children: React.ReactNode
 
 }) {
-  const theme = useSelector((state:RootState) => state.setting.theme);
+  // const theme = useSelector((state:RootState) => state.setting.theme);
 
   return (
     <html lang="en">
       <head />
       <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css" />
       <body>
           <Providers>
               <ContentPage>

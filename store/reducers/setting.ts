@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     popup : false,
-    theme : 'dark'
+    themeRoot : 'dark',
 }
 
 const settingSlice = createSlice({
@@ -13,14 +13,15 @@ const settingSlice = createSlice({
             state.popup = action.payload
         },
         setTheme: (state, action) => {
-            state.popup = action.payload
+            state.themeRoot = action.payload
         }
     }
 
 })
 
 export const {
-    setPopup
+    setPopup,
+    setTheme
 } = settingSlice.actions;
 
 export default settingSlice.reducer;

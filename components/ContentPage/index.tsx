@@ -19,7 +19,9 @@ type Props = {
 
 export default function ContentPage({children} : Props) {
 
-    const [loading,setLoading] =  useState(false)
+    const [loading, setLoading] =  useState(false);
+    const [themes, setThemes] =  useState<any>(null);
+
    
     const dispatch = useDispatch()
 
@@ -35,25 +37,30 @@ export default function ContentPage({children} : Props) {
         setLoading(true)
     },[])
     const isLogged : any = useSelector((state :  RootState) => state.auth)
+    const themeRoot : any = useSelector((state :  RootState) => state.setting.themeRoot);
+    console.log(themeRoot, 'theme sdsd');
+    
 
     return (
         <>  
-            {!loading && <LoadingFull/>}
+            <div className={`${themeRoot}`}>
+                {!loading && <LoadingFull/>}
 
-            { (!isLogged.isLoggedIn) ? (
-                <LoginPage />
-            ) : (
-                <>   
-                    <Header funcShowMenu={handleShowMenu} username={isLogged?.username} />
-                    <div className="flex">
-                        <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show} user={isLogged?.username}/>
-                        <div className="bg-[#343541] w-full overflow-hidden">
-                            {children}
+                { (!isLogged.isLoggedIn) ? (
+                    <LoginPage />
+                ) : (
+                    <>   
+                        <Header funcShowMenu={handleShowMenu} username={isLogged?.username} />
+                        <div className="flex">
+                            <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show} user={isLogged?.username}/>
+                            <div className={`bgContent w-full overflow-hidden`}>
+                                {children}
+                            </div>
                         </div>
-                    </div>
-                    <ComPopup />
-                </>
-            )}
+                        <ComPopup />
+                    </>
+                )}
+            </div>
         </>
     )
 }

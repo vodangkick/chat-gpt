@@ -59,7 +59,7 @@ function CompChat({chatId} : Props) {
         }
       ]);
     
-      const addChatGpt = async (message: Object) => {
+      const addChatGpt = async (message: any) => {
           await addDoc(
               collection(db, "users", userName, 'chats', chatId, 'messages'),
               message
@@ -227,7 +227,7 @@ function CompChat({chatId} : Props) {
                     )} 
 
                 { loadingText && (
-                  <div className="py-5 text-white bg-[#434654]">
+                  <div className="py-5 text-white bgMessChat">
                       <div className={`${styles.chatMessage} ${styles.messOfChat} flex space-x-5 px-10 max-w-2xl mx-auto`}>
                           <div className={styles.messAvata}>
                             <SiOpenai className="h-7 w-5"/>
@@ -250,7 +250,7 @@ function CompChat({chatId} : Props) {
                
             </div>
 
-            <div className={`${styles.chatInput} md:dark:border-transparent`}   >
+            <div className={`${styles.chatInput} chatForm md:dark:border-transparent`}   >
                 <form className="flex" onSubmit={handleSend}>
                     <input
                     placeholder={!loadingText ? 'Send a meesage...' : 'Please Waiting......'}

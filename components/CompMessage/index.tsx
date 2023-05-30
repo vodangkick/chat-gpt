@@ -47,7 +47,7 @@ function Message({message}: Props) {
     //console.log(newArray);
 
     return (
-        <div className={`${styles.chatMessage} py-5 text-white ${isChatGPT && `bg-[#434654] ${styles.messOfChat}`}`}>
+        <div className={`${styles.chatMessage} py-5 ${isChatGPT && `bgMessChat ${styles.messOfChat}`}`}>
             <div className="flex space-x-5 px-10 max-w-2xl mx-auto">
                     { isChatGPT ? (
                         <div className={`${styles.messAvata}`}>
