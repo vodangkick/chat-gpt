@@ -10,11 +10,14 @@
         justify-content: space-around;
         align-items: center;
         background-color: $color-green-2;
+        color: $color-white;
+
     }
 
     &.messOfChat {
         .messAvata {
             background-color: $color-green;
+            color: $color-white;
         }
     }
     

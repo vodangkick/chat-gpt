@@ -15,6 +15,7 @@ import CompLoading from "../commons/CompLoading";
 import { FaTelegramPlane } from 'react-icons/fa';
 import { SiOpenai } from 'react-icons/si';
 import axios from 'axios';
+import { useTranslation } from "react-i18next";
 
 
 
@@ -37,6 +38,7 @@ function CompChat({chatId} : Props) {
     const inputRef = useRef<HTMLInputElement>(null)
     const [loadingText, setTextLoading] = useState(false);
     let userName : any = useSelector((state: RootState) => state.auth.username);
+    const { t } = useTranslation();
    
     const [messages, loading, error] = useCollection(query(
       userName && collection(db, 'users', userName, 'chats', chatId, 'messages'),
@@ -127,29 +129,6 @@ function CompChat({chatId} : Props) {
             ...apiMessages 
           ]
         }
-
-        // await fetch("https://api.openai.com/v1/chat/completions",
-        // {
-        //   method: "POST",
-        //   headers: {
-        //     "Authorization": "Bearer " + API_KEY,
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify(apiRequestBody),
-        //   next: { revalidate: 10 }
-        // }).then((data) => {
-        // console.log(apiRequestBody,'aaa');
-        // await axios.post('https://api.openai.com/v1/chat/completions',{
-        //   headers: {
-        //     "Authorization": "Bearer " + API_KEY,
-        //     "Content-Type": "application/json"
-        //   },
-        //   data: apiRequestBody
-        // }).then(res => {
-        //   console.log(res,'axios')
-        // }).catch(error => {
-        //   console.log(error,'error ')
-        // })
     
         await fetch("https://api.openai.com/v1/chat/completions",
         {
@@ -163,6 +142,9 @@ function CompChat({chatId} : Props) {
         }).then((data) => {
                return data.json();
         }).then((data) => {
+           //const resText = data.choices[0].message.content ? data.choices[0].message.content : data.error.message
+
+          console.log(data,'data');
           const messageChatGPT: Message = {
             text: data.choices[0].message.content || "chat gpt was unable to find an answer for that!",
             createAt: serverTimestamp(),
@@ -186,6 +168,8 @@ function CompChat({chatId} : Props) {
           }]);
           
         }).catch(error => {
+          console.log(error,'error');
+
 
           if (inputRef.current !== null) { 
             inputRef.current.disabled = false;
@@ -216,7 +200,7 @@ function CompChat({chatId} : Props) {
             <div className="text" >
                     {messages?.empty && (
                         <>
-                            <p className="mt-10 text-center text-white">Can I help you?</p>
+                            <p className="mt-10 text-center text-white">{t('Can I help you?')}</p>
                         </>
                     )}
                     {messages && messages?.docs.map((message : any) => (
@@ -235,12 +219,9 @@ function CompChat({chatId} : Props) {
                           <p className="pt-1 text-sm">
                             <TypeAnimation
                                   sequence={[
-                                      '', // Types 'One'
+                                      `${t('I thinking.....')}`, // Types 'One'
                                       1000,
                                   ]}
-                                  cursor={true}
-                                  repeat={Infinity}
-                                  omitDeletionAnimation={true}
                               /> 
                           </p>
           
@@ -253,7 +234,7 @@ function CompChat({chatId} : Props) {
             <div className={`${styles.chatInput} chatForm md:dark:border-transparent`}   >
                 <form className="flex" onSubmit={handleSend}>
                     <input
-                    placeholder={!loadingText ? 'Send a meesage...' : 'Please Waiting......'}
+                    placeholder={`${t(!loadingText ? 'Send a meesage...' : 'Please Waiting......')}`}
                     value={prompt}
                     ref={inputRef}
                     onChange={(e) => setPrompt(e.target.value)}
@@ -262,7 +243,7 @@ function CompChat({chatId} : Props) {
                       <FaTelegramPlane className="text-white-400 w-7 h-7" />
                     </button>
                 </form>
-                <p>ChatGPT Mar 23 Version. Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts</p>
+                <p>{t('ChatGPT By Mai Tuan Sang. Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts.')}</p>
             </div>
         </div>
     )

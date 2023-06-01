@@ -8,6 +8,7 @@ import { Router } from "next/router"
 import { useEffect, useState } from "react"
 import { useCollection } from "react-firebase-hooks/firestore"
 import styles from './CompChatRow.module.scss';
+import { useTranslation } from "react-i18next";
 
 
 
@@ -19,11 +20,11 @@ type Props = {
 }
 
 function ChatRow({id, user,funcCloseMenu} : Props) {
+    const { t } = useTranslation();
 
     const pathname = usePathname();
     const router = useRouter();
     const [active, setAvtive] = useState(false);
-    //const username = 'user3';
 
     const [messages] = useCollection(
         collection(db, 'users', user, 'chats', id,'messages'),
@@ -43,7 +44,7 @@ function ChatRow({id, user,funcCloseMenu} : Props) {
         <Link href={`/chat/${id}`} onClick={()=>funcCloseMenu()} className={`${styles.chatRow} chatRow justify-center ${active && 'bg-[#434654]'}`}>
             <ChatBubbleLeftIcon className="w-5 w-5" />
             <p className="flex-1 truncare pl-2">
-                {messages?.docs[messages?.docs.length - 1]?.data().text || "New chat"}
+                {messages?.docs[messages?.docs.length - 1]?.data().text || t("New chat")}
             </p>
             <TrashIcon onClick={removeChat} className="w-5 w-5 text-gray-700 hover:text-red-700" />
         </Link>

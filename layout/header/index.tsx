@@ -6,6 +6,7 @@ import { addDoc, collection, serverTimestamp} from 'firebase/firestore';
 import { db } from '../../firebase';
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     funcShowMenu: Function,
@@ -15,13 +16,13 @@ type Props = {
 
 export default function Header({funcShowMenu, username} : Props) {
     const router = useRouter();
+    const { t } = useTranslation();
     const createNewChat = async () => {
         const  doc = await addDoc(collection(db,"users", username, "chats"),{
             userId: 'userid',
             createAt: serverTimestamp()
         })
         router.push(`/chat/${doc.id}`)
-
     }
     
     return (
@@ -30,7 +31,7 @@ export default function Header({funcShowMenu, username} : Props) {
                 <FaBars className="cursor-pointer hover:opacity-7 h-8 w-8" onClick={() => funcShowMenu()} />
             </div>
             <div className="text2xl">
-                New Chat
+                {t('New Chat')}
             </div>
             <div className="cursor-pointer hover:opacity-7"  onClick={() => createNewChat()}>
                 <AiOutlinePlus className="h-8 w-8" />

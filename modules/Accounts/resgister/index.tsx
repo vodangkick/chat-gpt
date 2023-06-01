@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../Login/login.module.scss';
 import styles2 from './register.module.scss';
-
 import {
   register
 } from '../../../store/reducers/auth';
@@ -10,6 +9,8 @@ import { RootState, AppDispatch }  from '../../../store/store'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import LoadingFull from '../../../components/commons/CompLoading/LoadingFull';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../../../components/commons/CompMultiLanguage/LanguageSwitcher';
 
 const RegisterPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,6 +26,7 @@ const RegisterPage = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const isLoading = useSelector((state: RootState) => state.auth.isLoading);
   const isLogged = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
+  const { t } = useTranslation();
   
   useEffect(() => {
     if(isLogged === 'true' || isLoggedIn === true) {
@@ -37,7 +39,7 @@ const RegisterPage = () => {
       dispatch(register({email, username, password}))
       return true;
     }else {
-      setErrorLocal('Comfirm password wrong');
+      setErrorLocal(t('Comfirm password wrong'));
       return false;
     }
   }
@@ -47,11 +49,14 @@ const RegisterPage = () => {
           <LoadingFull />
         )}
         <div className={styles.loginForm}>
-            
-            <h1>Welcome Chat GPT</h1>
+            <div className={`${styles.selectLang}`}>
+                <div>{t('Select Language')}</div>
+                <div><LanguageSwitcher /></div>
+            </div>
+            <h1>{t('Welcome to ChatGPT')}</h1>
             <div className="mt-3">
               { error && Object.keys(error).map((key) =>
-                  <div className={`${styles2.error} text-red-700 font-bold`} key={key}>{key} {error[key]}</div>
+                  <div className={`${styles2.error} text-red-700 font-bold`} key={key}> {t(key)} {t(error[key])}</div>
               )}
               { errorLocal && <div className={`${styles2.error} text-red-700 font-bold`}>{errorLocal}</div>
               }
@@ -61,7 +66,7 @@ const RegisterPage = () => {
                 type="text"
                 value={username}
                 onChange={e => setUsernameState(e.target.value)}
-                placeholder="Username"
+                placeholder={`${t("Username")}`}
 
                 />
             </div>
@@ -70,7 +75,7 @@ const RegisterPage = () => {
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="Email"
+                placeholder={`${t("Email")}`}
                 />
             </div>
             <div>
@@ -78,7 +83,7 @@ const RegisterPage = () => {
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder={`${t("Password")}`}
                 />
             </div>
             <div>
@@ -86,13 +91,13 @@ const RegisterPage = () => {
                 type="password"
                 value={repassword}
                 onChange={e => setRePassword(e.target.value)}
-                placeholder="Comfirm password"
+                placeholder={`${t("Comfirm password")}`}
                 />
             </div>
 
-            <button onClick={(e) => handleRegister(e)}>Submit</button>
+            <button onClick={(e) => handleRegister(e)}>{t('Register')}</button>
             <div className={`${styles.textBottom} mt-5 items-center`}>
-              Go to <Link className="text-[#10a37f]" href="/">Login</Link> .
+            {t('Go to')} <Link className="text-[#10a37f]" href="/">{t('Login')}</Link> .
             </div>
         </div>
     </>

@@ -19,6 +19,7 @@ import CompLoading from '../../components/commons/CompLoading';
 import ComPopup from '../../components/commons/CompPopup';
 import { setPopup } from '../../store/reducers/setting';
 import { DocumentData } from "firebase/firestore";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -32,6 +33,8 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
     const [ showMenu, setShowMenu ] = useState<boolean>(false);
     const dispatch = useDispatch();
     const refMenuBottom = useRef<any>(null);
+    const { t } = useTranslation();
+
 
     const [chats, loading, error] = useCollection(
         userName && collection(db,'users', userName,"chats")
@@ -97,20 +100,20 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
                         <li>
                             <Link className="flex" href="mailto:quang115thd@gmail.com">
                                 <BiSupport className="flex flex-col mr-2 h-4 w-4" />
-                                <span>Help & FAQ</span>
+                                <span>{t('Help & FAQ')}</span>
                             </Link>
                         </li>
                         <li onClick={() => removeChat()} >
                             <AiTwotoneDelete className="flex flex-col mr-2 h-4 w-4" />
-                            <span>Clear Chat</span>
+                            <span>{t('Clear all chats')}</span>
                         </li>
                         <li onClick={()=>handleShowPopup()}>
                             <AiFillSetting  className="flex flex-col mr-2 h-4 w-4" />
-                            <span>Setting</span>
+                            <span>{t('Setting')}</span>
                         </li>
                         <li>
                             <AiOutlineImport className="flex flex-col mr-2 h-4 w-4" />
-                            <span onClick={()=> handleLogOut()} >Log out</span>
+                            <span onClick={()=> handleLogOut()} >{t('Log out')}</span>
                         </li>
                     </ul>
                 </div>

@@ -11,6 +11,10 @@
         transition: all 0.2s ease-in-out; 
         transform: scale(0.8);
         opacity: 0;
+
+        @include mq('lg', max) {
+            width: 100%;
+        }
     }
     .popUpHeader{
        border-bottom: 1px solid $color-gray-2;
@@ -21,9 +25,24 @@
        padding-bottom: 15px;
     }
 
+    .popUpcontent {
+        @include mq('lg', max) {
+          flex-direction: column;
+        }
+        
+    }
+
     .popUpLeft {
         .menuTags {
             width: 90%;
+
+            @include mq('lg', max) {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 1em;
+                
+            }
             
             li {
                 display: flex;
@@ -32,6 +51,11 @@
                 font-size: 0.9em;
                 padding: 5px;
                 cursor: pointer;
+
+                @include mq('lg', max) {
+                    flex-basis: 50%;
+                    justify-content: center;
+                }
 
                 &.activeTag {
                     background: $color-gray-2;

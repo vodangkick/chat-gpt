@@ -27,7 +27,7 @@
         background: transparent;
         outline: none;
         margin: 10px;
-        color: white;
+        color: $color-white;
         width: 100%;
     }
 
@@ -63,6 +63,7 @@
         height: 35px;
         justify-content: space-around;
         align-items: center;
+        color: $color-white;
     }
 
     &.messOfChat {

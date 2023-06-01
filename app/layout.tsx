@@ -3,6 +3,7 @@ import { Providers } from "./provider";
 import ContentPage from '../components/ContentPage';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { ProviderLang } from './providerLang';
 
 
 
@@ -25,9 +26,11 @@ export default async function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
       <body>
           <Providers>
+            <ProviderLang>
               <ContentPage>
                 {children}
               </ContentPage>
+            </ProviderLang>
           </Providers>
       </body>
     </html>
