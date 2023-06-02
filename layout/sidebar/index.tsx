@@ -65,7 +65,7 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
 
     useEffect(() => {
         document.addEventListener("click", handleOutside, true)
-    }, [])
+    }, [showMenu])
 
     const handleOutside = (e:any) => {
         if(!refMenuBottom?.current?.contains(e.target)) {
@@ -75,8 +75,8 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
     
 
     return (
-        <div className={`${styles.sidebar} ${handeShow && styles.openMenu} h-screen`}>
-            <div className={`p-2 flex flex-col h-screen`}>
+        <div className={`${styles.sidebar} ${handeShow && styles.openMenu}`}>
+            <div className={`p-2 flex flex-col`}>
                 <div className="flex-1">
                     <NewChat id='' username={userName} className="" />
                     <div className={`${styles.closeToggle} text-3xl`} onClick={()=>funcCloseMenu()} >
@@ -92,11 +92,11 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
                     </div>
                 </div>
                 <div className={`${styles.logOut} text-gray-700 flex items-center`} >
-                    <div className="flex items-center" onClick={() => handleShowMenuBottom()}>
+                    <div className="flex items-center w-full" onClick={() => handleShowMenuBottom()}>
                         <AiOutlineUser className="flex flex-col mr-2 h-4 w-4" />
                         <p className="flex flex-col" >{userName}</p>         
                     </div>
-                    <ul ref={refMenuBottom} className={`${styles.menuBottom} ${showMenu && styles.openMenu}`} >
+                    <ul ref={refMenuBottom} className={`${styles.menuBottom} ${showMenu === true && styles.openMenu}`} >
                         <li>
                             <Link className="flex" href="mailto:quang115thd@gmail.com">
                                 <BiSupport className="flex flex-col mr-2 h-4 w-4" />

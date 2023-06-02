@@ -6,6 +6,11 @@
     position: relative;
     width: 400px;
     padding: 0 10px;
+    height: 100vh;
+
+    @include mq('lg', max){
+        height: 100%;
+    }
 
     .contentRow {
         position: absolute;

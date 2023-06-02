@@ -30,14 +30,13 @@ type Props = {
 }
 
 function CompChat({chatId} : Props) {
-    // let isLogged : any = typeof window !== 'undefined' ? localStorage.getItem('isLogin') : null
-    // isLogged = JSON.parse(isLogged);
     
     const [prompt, setPrompt] = useState("");
     const messageListRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLInputElement>(null)
     const [loadingText, setTextLoading] = useState(false);
     let userName : any = useSelector((state: RootState) => state.auth.username);
+    const [isSubmit, setIsSubmit ] = useState<boolean>(false);
     const { t } = useTranslation();
    
     const [messages, loading, error] = useCollection(query(
@@ -74,9 +73,16 @@ function CompChat({chatId} : Props) {
         if(!prompt) return;
 
         const input = prompt.trim();
-        setPrompt("");
 
-        const messageUser: Message = {
+        // if (inputRef.current != null) { 
+        //     inputRef.current.disabled = true;
+        // }
+        setTextLoading(true);
+
+        if(loadingText === false) {
+
+          setPrompt("");
+          const messageUser: Message = {
             text: input,
             createAt: serverTimestamp(),
             user:{
@@ -84,34 +90,30 @@ function CompChat({chatId} : Props) {
                 name: 'name',
                 avata: 'user_image' || 'https://links.papareact.com/2i6'
             }
-        }
+          }
 
-        await addDoc(
-            collection(db, "users", userName, 'chats', chatId, 'messages'),
-            messageUser
-        )
+          await addDoc(
+              collection(db, "users", userName, 'chats', chatId, 'messages'),
+              messageUser
+          )
 
-        const newMessage = {
-          message: input,
-          direction: 'outgoing',
-          sender: "user"
-        };
+          const newMessage = {
+            message: input,
+            direction: 'outgoing',
+            sender: "user"
+          };
     
-        const newMessages : any = [...messages1, newMessage];
-        
-        setMessages(newMessages);
+          const newMessages : any = [...messages1, newMessage];
+          
+          setMessages(newMessages);
 
-        if (inputRef.current != null) { 
-            inputRef.current.disabled = true;
+          await processMessageToChatGPT(newMessages);
         }
-
-        setTextLoading(true);
         
-        await processMessageToChatGPT(newMessages);
       };
     
       async function processMessageToChatGPT(chatMessages : any) { // messages is an array of messages
-    
+        setIsSubmit(true);
         let apiMessages = chatMessages.map((messageObject :  any) => {
           let role = "";
           if (messageObject.sender === "ChatGPT") {
@@ -142,9 +144,9 @@ function CompChat({chatId} : Props) {
         }).then((data) => {
                return data.json();
         }).then((data) => {
-           //const resText = data.choices[0].message.content ? data.choices[0].message.content : data.error.message
 
-          console.log(data,'data');
+          setIsSubmit(false);
+
           const messageChatGPT: Message = {
             text: data.choices[0].message.content || "chat gpt was unable to find an answer for that!",
             createAt: serverTimestamp(),
@@ -155,10 +157,10 @@ function CompChat({chatId} : Props) {
             }
           }
           addChatGpt(messageChatGPT); 
-          if (inputRef.current !== null) { 
-            inputRef.current.disabled = false;
-            inputRef.current.focus();
-          }
+          // if (inputRef.current !== null) { 
+          //   inputRef.current.disabled = false;
+          //   inputRef.current.focus();
+          // }
 
           setTextLoading(false);
 
@@ -168,13 +170,11 @@ function CompChat({chatId} : Props) {
           }]);
           
         }).catch(error => {
-          console.log(error,'error');
 
-
-          if (inputRef.current !== null) { 
-            inputRef.current.disabled = false;
-            inputRef.current.focus();
-          }
+          // if (inputRef.current !== null) { 
+          //   inputRef.current.disabled = false;
+          //   inputRef.current.focus();
+          // }
 
           setMessages([...chatMessages, {
             message: 'errror',
