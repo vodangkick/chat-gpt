@@ -15,10 +15,12 @@ type Props = {
 function NewChat({id, username, className} : Props) {
     const router = useRouter();
     const { t } = useTranslation();
+    const titleChat = t('New Chat');
     const createNewChat = async () => {
         const  doc = await addDoc(collection(db,"users", username, "chats"),{
             userId: 'userid',
-            createAt: serverTimestamp()
+            createAt: serverTimestamp(),
+            title: titleChat,
         })
         router.push(`/chat/${doc.id}`)
 

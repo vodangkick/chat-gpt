@@ -44,7 +44,6 @@ function Message({message}: Props) {
         //     return highlightedCode
         // }
     //})
-    //console.log(newArray);
 
     return (
         <div className={`${styles.chatMessage} py-5 ${isChatGPT && `bgMessChat ${styles.messOfChat}`}`}>

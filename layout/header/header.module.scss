@@ -10,6 +10,7 @@
     align-items: center;
     display: none;
     padding: 10px;
+    //z-index: 2;
 
     @include mq(lg, max) {
         display: flex;

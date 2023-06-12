@@ -1,5 +1,21 @@
 @import '../../styles/mixin-color.scss';
 
+.bgSidebar {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0,0,0,0.6);
+    top:0;
+    left: 0;
+    z-index: 1;
+    display: none;
+
+    @include mq('lg', max){
+        &.openMenu {
+            display: block;
+        }
+    }
+}
 
 .sidebar {
     background-color: #202123;
@@ -47,6 +63,7 @@
         transition: all 0.3s ease-out;
         transform: translate(-125%);
         width: 260px;
+        z-index: 2;
 
         &.openMenu {
             transform: translate(0);
@@ -94,6 +111,7 @@
             font-size: 0.9em;
             display: flex;
             align-items: center;
+            
             &:hover {
                background-color: $color-gray-2; 
             }

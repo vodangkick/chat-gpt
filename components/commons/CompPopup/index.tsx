@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import styles from './ComPopup.module.scss';
 import { IoMdClose } from "react-icons/io";
 import { AiFillSetting } from "react-icons/ai";
@@ -21,6 +21,7 @@ export default function ComPopup() {
     const popup : boolean = useSelector((state: RootState) => state.setting.popup);
     const themeRoot : string = useSelector((state: RootState) => state.setting.themeRoot);
     const userName : any = useSelector((state: RootState) => state?.auth?.username);
+    const refPopUp = useRef<any>(null);
     const { t } = useTranslation();
 
     const [tab, setTag] = useState('general');
@@ -34,7 +35,6 @@ export default function ComPopup() {
     }
 
     const handleTheme = (value : string)=> {
-        console.log(value);
         dispatch(setTheme(value));
     }
 
@@ -48,10 +48,21 @@ export default function ComPopup() {
         })
     }
     
+    useEffect( ()=> {
+        document.addEventListener('click', handeleSideOutPopup, true);
+    },[popup])
+
+    const handeleSideOutPopup = (e :any) => {
+        console.log('sss')
+        if(!refPopUp.current.contains(e.target)){
+            dispatch(setPopup(false));
+        }
+    }
+    
     return (
         <>  
-            <div className={`${styles.popUp} ${popup && styles.openPopup} fixed items-center justify-center bg-gray-600/90 w-full h-screen top-0`}>
-                <div className={`${styles.popUpContainer} m-5 bg-gray-900 lg:w-[680px] lg:min-h-[400px] mt-5 rounded-lg p-5`}>
+            <div  className={`${styles.popUp} ${popup && styles.openPopup} fixed items-center justify-center bg-gray-600/90 w-full h-screen top-0`}>
+                <div ref={refPopUp} className={`${styles.popUpContainer} m-5 bg-gray-900 lg:w-[680px] lg:min-h-[400px] mt-5 rounded-lg p-5`}>
                     <div className={`${styles.popUpHeader} flex items-center`}>
                         <h2 className="text-lg font-medium leading-6">{t('Setting')}</h2>
                         <IoMdClose className={`${styles.popUpClose} w-6 h-6`} onClick={()=>handleShowPopup()} />

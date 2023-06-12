@@ -7,7 +7,6 @@ import { RootState } from '../../../store/store';
 
 const LanguageSwitcher = () => {
   const langNew = useSelector((state : RootState) => state.setting.lang);
-  console.log(langNew);
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
 

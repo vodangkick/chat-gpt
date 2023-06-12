@@ -1,16 +1,84 @@
+@import '../../styles/mixin-color.scss';
 .chatRow {
     margin-right: 10px;
     margin-left: 10px;
     margin-bottom: 10px;
 
+    &.activeLink {
+        background: #434654;
+    }
+
     p {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 200px;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+        // overflow: hidden;
+        // width: 200px;
 
         &:first-letter {
             text-transform: capitalize;
+        }
+    }
+}
+.groupTitle {
+    display: flex;
+    direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .titleLeft {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: block;
+        width: 200px;
+
+        @include mq('lg', max) {
+            width: 140px;
+        }
+
+    }
+
+    .titleRight {
+        display: none;
+
+        .activeLink & {
+            display: flex;
+        }
+
+    }
+
+    span {
+        display: flex;
+    }
+}
+.formEdit {
+    display: flex;
+    direction: row;
+    justify-content : space-between;
+
+    svg :hover {
+        color: $color-red;
+    }
+
+    &Right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        // svg {
+        //     height: 30px;
+        // }
+
+    }
+
+    input {
+        background: transparent;
+        position: relative;
+        z-index: 1;
+        border: 1px solid blue;
+
+        @include mq('lg', max) {
+            width: 140px;
         }
     }
 }

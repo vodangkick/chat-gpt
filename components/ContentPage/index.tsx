@@ -38,8 +38,6 @@ export default function ContentPage({children} : Props) {
     },[])
     const isLogged : any = useSelector((state :  RootState) => state.auth)
     const themeRoot : any = useSelector((state :  RootState) => state.setting.themeRoot);
-    console.log(themeRoot, 'theme sdsd');
-    
 
     return (
         <>  
