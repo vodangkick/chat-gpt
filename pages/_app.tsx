@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../lib/multil_language/i18n';
+import 'regenerator-runtime/runtime';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();

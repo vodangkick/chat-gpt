@@ -72,3 +72,49 @@
         }
     }
 }
+
+.speechGroup {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px ;
+
+    .startSpeech,
+    .stopSpeech {
+        opacity: 1;
+        height: 20px;
+        color: $color-white;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.blinkingEffect{
+    animation: blink 1s infinite;
+    font-size: 0.9rem;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+  
+  
+  
+  
+  
+  

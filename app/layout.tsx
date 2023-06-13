@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import '../styles/globals.css'
 import { Providers } from "./provider";
 import ContentPage from '../components/ContentPage';

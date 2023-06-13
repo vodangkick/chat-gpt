@@ -12,6 +12,7 @@ import LoginPage from '../../modules/Accounts/Login';
 import { RootState } from '../../store/store';
 import LoadingFull from '../commons/CompLoading/LoadingFull';
 import ComPopup from '../commons/CompPopup';
+import 'regenerator-runtime/runtime'
 
 type Props = {
     children : React.ReactNode

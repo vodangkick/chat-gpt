@@ -12,10 +12,13 @@ import { useSelector } from 'react-redux';
 import styles from './CompChat.module.scss';
 import { TypeAnimation } from 'react-type-animation';
 import CompLoading from "../commons/CompLoading";
-import { FaTelegramPlane } from 'react-icons/fa';
+import { FaTelegramPlane, FaMicrophone } from 'react-icons/fa';
 import { SiOpenai } from 'react-icons/si';
+import { BsFillPauseCircleFill,  } from 'react-icons/bs';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 
 
 
@@ -33,10 +36,12 @@ function CompChat({chatId} : Props) {
     
     const [prompt, setPrompt] = useState("");
     const messageListRef = useRef<HTMLInputElement>(null);
-    const inputRef = useRef<HTMLInputElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null);
+    const refButtonSubmit = useRef<HTMLButtonElement>(null);
     const [loadingText, setTextLoading] = useState(false);
     let userName : any = useSelector((state: RootState) => state.auth.username);
     const [isSubmit, setIsSubmit ] = useState<boolean>(false);
+    // const [void, setIsSubmit ] = useState<boolean>(false);
     const { t } = useTranslation();
    
     const [messages, loading, error] = useCollection(query(
@@ -144,7 +149,7 @@ function CompChat({chatId} : Props) {
         }).then((data) => {
                return data.json();
         }).then((data) => {
-
+          SpeechRecognition.startListening({ continuous: true, language: 'vi-VN' });
           setIsSubmit(false);
 
           const messageChatGPT: Message = {
@@ -194,6 +199,46 @@ function CompChat({chatId} : Props) {
           setTextLoading(false);
         });
       }
+
+    /////
+
+    const {
+      transcript,
+      listening,
+      browserSupportsSpeechRecognition,
+      resetTranscript,
+    } = useSpeechRecognition();
+
+    useEffect(() => {
+
+      setPrompt(transcript);  
+      if (transcript) {
+        const timeoutId = setTimeout(() => {
+          SpeechRecognition.stopListening();
+          refButtonSubmit.current?.click();
+          resetTranscript();
+
+        }, 2500);
+
+        return () => {
+          if (timeoutId) {
+            clearTimeout(timeoutId);
+          }
+        };
+      }
+    }, [transcript]);
+  
+    if (!browserSupportsSpeechRecognition) {
+      return <span>Bộ trình duyệt của bạn không hỗ trợ chuyển đổi giọng nói thành văn bản.</span>;
+    }
+  
+    const handleStopListening = () => {
+      SpeechRecognition.stopListening();
+    };
+  
+    const handleStartListening = () => {
+      SpeechRecognition.startListening({ continuous: true, language: 'vi-VN' });
+    };
     
     return (
         <div className={styles.chatBox} ref={messageListRef}>
@@ -232,6 +277,14 @@ function CompChat({chatId} : Props) {
             </div>
 
             <div className={`${styles.chatInput} chatForm md:dark:border-transparent`}   >
+            <div>
+              <div className={styles.speechGroup}>
+                {!listening && <FaMicrophone onClick={() => handleStartListening()} className={styles.startSpeech} /> }
+                {listening && <BsFillPauseCircleFill onClick={() => handleStopListening()} className={styles.stopSpeech} /> }
+                {listening && <span>{t('Listening...')}</span>}
+              </div>
+             
+            </div>
                 <form className="flex" onSubmit={handleSend}>
                     <input
                     placeholder={`${t(!loadingText ? 'Send a meesage...' : 'Please Waiting......')}`}
@@ -239,7 +292,7 @@ function CompChat({chatId} : Props) {
                     ref={inputRef}
                     onChange={(e) => setPrompt(e.target.value)}
                     type="text" />
-                    <button>
+                    <button ref={refButtonSubmit}>
                       <FaTelegramPlane className="text-white-400 w-7 h-7" />
                     </button>
                 </form>
