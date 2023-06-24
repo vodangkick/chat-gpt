@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 type Props = {
     funcShowMenu: Function,
     username: string
-    
 }
 
 export default function Header({funcShowMenu, username} : Props) {

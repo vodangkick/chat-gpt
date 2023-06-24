@@ -30,9 +30,9 @@
 
     .contentRow {
         position: absolute;
-        top: 60px;
+        top: 110px;
         left: 0;
-        height: calc(100vh - 120px);
+        height: calc(100vh - 170px);
         margin-bottom: 60px;
         overflow-y: auto;
         width: 100%;
@@ -128,4 +128,20 @@
         }
     }
     
+}
+
+.topSiderBar {
+    padding: 0px 5px 10px 5px;
+    position: relative;
+    z-index: 2;
+    color:$color-white;
+    display: flex;
+    border-bottom: 1px solid $color-gray-2;
+    justify-content: center;
+
+    svg {
+        height: 20px;
+        width: auto;
+        margin-right: 20px;
+    }
 }

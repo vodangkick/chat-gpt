@@ -51,7 +51,7 @@ export default function ContentPage({children} : Props) {
                     <>   
                         <Header funcShowMenu={handleShowMenu} username={isLogged?.username} />
                         <div className="flex">
-                            <Sidebar funcCloseMenu={handleCloseMenu} handeShow={show} user={isLogged?.username}/>
+                            <Sidebar funcShowMenu={handleShowMenu} funcCloseMenu={handleCloseMenu} handeShow={show} user={isLogged?.username}/>
                             <div className={`bgContent w-full overflow-hidden`}>
                                 {children}
                             </div>

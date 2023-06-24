@@ -18,6 +18,7 @@ import { BsFillPauseCircleFill,  } from 'react-icons/bs';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import debounce from 'lodash/debounce';
 
 
 
@@ -150,8 +151,10 @@ function CompChat({chatId} : Props) {
                return data.json();
         }).then((data) => {
           SpeechRecognition.startListening({ continuous: true, language: 'vi-VN' });
-          setIsSubmit(false);
-
+          // setIsSubmit(false);
+          // let text = new SpeechSynthesisUtterance(data.choices[0].message.content);
+          // text.lang = "vi-VN";
+          // window.speechSynthesis.speak(text);
           const messageChatGPT: Message = {
             text: data.choices[0].message.content || "chat gpt was unable to find an answer for that!",
             createAt: serverTimestamp(),
@@ -175,6 +178,7 @@ function CompChat({chatId} : Props) {
           }]);
           
         }).catch(error => {
+          SpeechRecognition.startListening({ continuous: true, language: 'vi-VN' });
 
           // if (inputRef.current !== null) { 
           //   inputRef.current.disabled = false;
@@ -209,35 +213,33 @@ function CompChat({chatId} : Props) {
       resetTranscript,
     } = useSpeechRecognition();
 
-    useEffect(() => {
+    // const handleStopListeningNew = debounce(() => {
+    //   SpeechRecognition.stopListening();
+    //   refButtonSubmit.current?.click();
+    //   resetTranscript();
+    //   setPrompt('');
 
-      setPrompt(transcript);  
-      if (transcript) {
-        const timeoutId = setTimeout(() => {
-          SpeechRecognition.stopListening();
-          refButtonSubmit.current?.click();
-          resetTranscript();
+    // }, 2500);
 
-        }, 2500);
+    // useEffect(() => {
+      
+    //   if (transcript) {
+    //     setPrompt(transcript);
+    //     handleStopListeningNew();
+    //   }
 
-        return () => {
-          if (timeoutId) {
-            clearTimeout(timeoutId);
-          }
-        };
-      }
-    }, [transcript]);
+    // }, [transcript, handleStopListeningNew]);
   
-    if (!browserSupportsSpeechRecognition) {
-      return <span>Bộ trình duyệt của bạn không hỗ trợ chuyển đổi giọng nói thành văn bản.</span>;
-    }
+    // if (!browserSupportsSpeechRecognition) {
+    //   return <span>Bộ trình duyệt của bạn không hỗ trợ chuyển đổi giọng nói thành văn bản.</span>;
+    // }
   
     const handleStopListening = () => {
-      SpeechRecognition.stopListening();
+      // SpeechRecognition.stopListening();
     };
   
     const handleStartListening = () => {
-      SpeechRecognition.startListening({ continuous: true, language: 'vi-VN' });
+      // SpeechRecognition.startListening({ continuous: true, language: 'vi-VN' });
     };
     
     return (
@@ -281,7 +283,7 @@ function CompChat({chatId} : Props) {
               <div className={styles.speechGroup}>
                 {!listening && <FaMicrophone onClick={() => handleStartListening()} className={styles.startSpeech} /> }
                 {listening && <BsFillPauseCircleFill onClick={() => handleStopListening()} className={styles.stopSpeech} /> }
-                {listening && <span>{t('Listening...')}</span>}
+                {listening && <span className={styles.blinkingEffect}>{t('Listening...')}</span>}
               </div>
              
             </div>

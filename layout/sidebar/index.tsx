@@ -10,10 +10,11 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/reducers/auth';
 import styles from './sidebar.module.scss';
-import { AiOutlineClose,AiTwotoneDelete, AiOutlineImport, AiFillSetting, AiOutlineUser } from "react-icons/ai";
-import { BiSupport } from 'react-icons/bi';
+import { AiOutlineClose, AiTwotoneDelete, AiOutlineImport, AiFillSetting, AiOutlineUser, AiOutlineCheck } from "react-icons/ai";
+import { BiSupport, BiSelectMultiple, BiSearchAlt, BiSidebar } from 'react-icons/bi';
+import { BsTrash3 } from 'react-icons/bs';
 import { IoMdClose } from "react-icons/io";
-import Link from "next/link"
+import Link from "next/link";
 import { RootState } from '../../store/store';
 import CompLoading from '../../components/commons/CompLoading';
 import ComPopup from '../../components/commons/CompPopup';
@@ -26,11 +27,16 @@ import { useTranslation } from 'react-i18next';
 type Props = {
     funcCloseMenu: Function,
     handeShow: boolean,
-    user: String
+    user: String,
+    funcShowMenu: Function,
 }
-function Sidebar({funcCloseMenu, handeShow, user} : Props) {
+function Sidebar({funcCloseMenu, handeShow, user, funcShowMenu} : Props) {
     const userName : any = useSelector((state: RootState) => state?.auth?.username);
     const [ showMenu, setShowMenu ] = useState<boolean>(false);
+    const [ selectAll, setSelectAll ] = useState<boolean>(false);
+    const [ checkList, setCheckList ] = useState<string[]>([]);
+
+
     const dispatch = useDispatch();
     const refMenuBottom = useRef<any>(null);
     const refMenuSiderBar = useRef<any>(null);
@@ -65,6 +71,12 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
         setShowMenu(false);
     }
 
+    const removeSelectedChat = () => {
+        checkList.forEach(async (item : string) => {
+            await deleteDoc(doc(db, 'users', userName, 'chats', item));
+        })
+    }
+
     useEffect(() => {
         document.addEventListener("click", handleOutside, true)
         return () => document.removeEventListener("click", handleOutside, true);
@@ -79,6 +91,7 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
     useEffect(()=> {
        document.addEventListener('click',handleOutSideSidebar, true);
        return () => document.removeEventListener('click',handleOutSideSidebar, true);
+       
     },[])
 
     const handleOutSideSidebar = (e : any) => {
@@ -87,6 +100,16 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
         }
     }
 
+    const handleSelectedAll = () => {
+        setSelectAll(true);
+    }
+
+    const handleCloseSelectAll = () => {
+        setSelectAll(false);
+    }
+
+    
+
     return (
         <>
             <div className={`${styles.bgSidebar} ${handeShow && styles.openMenu}`}></div>
@@ -94,6 +117,19 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
                 <div className={`p-2 flex flex-col`}>
                     <div className="flex-1">
                         <NewChat id='' username={userName} className="" />
+                        <div className={styles.topSiderBar}>
+                            { !selectAll ? 
+                                (<>
+                                    <BiSelectMultiple onClick={() => handleSelectedAll()}/>
+                                    <BiSearchAlt />
+                                    <BiSidebar onClick={() => funcCloseMenu()} />
+                                </>) 
+                            : (<>
+                                <BsTrash3 onClick={() => removeSelectedChat()} />
+                                <AiOutlineClose onClick={() => handleCloseSelectAll()} />
+                            </>) }
+                            
+                        </div>
                         <div className={`${styles.closeToggle} text-3xl`} onClick={()=>funcCloseMenu()} >
                             <IoMdClose />
                         </div>
@@ -104,7 +140,7 @@ function Sidebar({funcCloseMenu, handeShow, user} : Props) {
                             {chats?.docs.map((chat : any) => (
                                 <>
                                 {/* <div>{chat.data().title}</div> */}
-                                <ChatRow funcCloseMenu={funcCloseMenu} key={chat.id} id={chat.id} title={chat?.data()?.title} user={userName} />
+                                <ChatRow checkList={checkList} setCheckList={setCheckList} selectAll={selectAll} funcCloseMenu={funcCloseMenu} key={chat.id} id={chat.id} title={chat?.data()?.title} user={userName} />
                                 </>
                             ))}
                         </div>
